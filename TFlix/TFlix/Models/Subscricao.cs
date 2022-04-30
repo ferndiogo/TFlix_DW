@@ -4,14 +4,16 @@ namespace TFlix.Models
 {
     public class Subscricao
     {
-        public Subscricao(){
-            Filme = new HashSet<Filmes>();
+        public Subscricao()
+        {
+            Series = new HashSet<Serie>();
         }
 
-        public int idSb { get; set; }
+        public int Id { get; set; }
 
-        //chave estrangeira
-        public string idUt { get; set; }
+        [ForeignKey("Utilizador")]
+        public int UtilizadorFK { get; set; }
+        public Utilizador Utilizador { get; set; }
 
         public int Duracao { get; set; }
 
@@ -19,7 +21,8 @@ namespace TFlix.Models
 
         public DateTime DataSub { get; set; }
 
-        public ICollection<Filmes> Filme { get; set; }
+        public ICollection<Serie> Series { get; set; }
+
     }
 }
 

@@ -1,12 +1,14 @@
 ﻿namespace TFlix.Models
 {
-    public class Series
+    public class Filme
     {
-        public Series() { 
-        
+        public Filme() {
+            TemFilmes = new HashSet<TemF>();
+
+            Aluguer = new HashSet<Aluga>();
         }
 
-        public int idSerie { get; set; }
+        public int Id { get; set; }
 
         public string Nome { get; set; }
 
@@ -21,5 +23,9 @@
         public string Atores { get; set; }
 
         public string Género { get; set; }
+
+        public ICollection<TemF> TemFilmes { get; set; }
+
+        public ICollection<Aluga> Aluguer { get; set; }
     }
 }
