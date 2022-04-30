@@ -1,27 +1,20 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TFlix.Models
 {
     public class TemF
     {
-        public TemF()
-        {
-            Filme = new HashSet<Filmes>();
-
-            Sub = new HashSet<Subscricao>();
-
-        }
+        public int Id { get; set; }
 
         [ForeignKey("Subscricao")]
-        public int idSubFK { get; set; }
-        public Subscricao idSub { get; set; }
+        public int SubcricaoFK { get; set; }
+        public Subscricao Subcricao { get; set; }
 
-        [ForeignKey("Filmes")]
-        public int idFilmeFK { get; set; }
-        public Filmes idFilme { get; set; }
+        [ForeignKey("Filme")]
+        public int FilmeFK { get; set; }
+        public Filme Filme { get; set; }
 
-        public ICollection<Filmes> Filme { get; set; }
-
-        public ICollection<Subscricao> Sub { get; set; }
+        
     }
 }
