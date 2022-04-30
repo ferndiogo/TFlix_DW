@@ -1,32 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TFlix.Models
 {
     public class Aluga
     {
-        public Aluga()
-        {
-            Utilizdores = new HashSet<Utilizador>();
-
-            Filme = new HashSet<Filmes>();
-
-        }
+        public int Id { get; set; }
 
         [ForeignKey("Utilizador")]
-        public int idUtFK { get; set; }
-        public int idUt { get; set; }
+        public int UtilizadorFK { get; set; }
+        public Utilizador Utilizador { get; set; }
 
-        [ForeignKey("Filmes")]
-        public int idFilmeFK { get; set; }
-        public int idFilme { get; set; }
+        [ForeignKey("Filme")]
+        public int FilmeFK { get; set; }
+        public Filme Filme { get; set; }
 
         public double Preco { get; set; }
 
         public int TempoAluguer { get; set; }
 
-        public ICollection<Utilizador> Utilizdores { get; set; }
-
-        public ICollection<Filmes> Filme { get; set; }
+        
 
     }
 

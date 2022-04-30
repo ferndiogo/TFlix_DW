@@ -1,14 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TFlix.Models
 {
     public class Gere
     {
-        public Gere()
-        {
-            Admins = new HashSet<Admin>();
-            Utilizadores = new HashSet<Utilizador>();
-        }
+        public int Id { get; set; }
 
         [ForeignKey("Admin")]
         public int AdminFK { get; set; }
@@ -16,9 +13,8 @@ namespace TFlix.Models
 
         [ForeignKey("Utilizador")]
         public int UtilizadorFK { get; set; }
-        public Utilizador Utilizador { get; set; }
 
-        public ICollection<Admin> Admins { get; set; }  
-        public ICollection<Utilizador> Utilizadores { get; set; }
+        public Utilizador Utilizador { get; set; }
+        
     }
 }

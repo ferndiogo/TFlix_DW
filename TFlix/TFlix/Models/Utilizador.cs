@@ -4,11 +4,15 @@ namespace TFlix.Models
 {
     public class Utilizador
     {
-        public Utilizador() { 
-            Admins = new HashSet<Admin>();
+        public Utilizador() {
+            GereTable = new HashSet<Gere>();
+
+            Subscricoes = new HashSet<Subscricao>();
+
+            Aluguer = new HashSet<Aluga>();
         }
 
-        public int idUt { get; set; }
+        public int Id { get; set; }
 
         public string Nome { get; set; }
 
@@ -20,6 +24,10 @@ namespace TFlix.Models
 
         public string Morada { get; set; }
 
-        public ICollection<Admin> Admins { get; set; }
+        public ICollection<Gere> GereTable { get; set; }
+
+        public ICollection<Subscricao> Subscricoes { get; set; }
+
+        public ICollection<Aluga> Aluguer { get; set; }
     }
 }
