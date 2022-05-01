@@ -5,13 +5,13 @@ namespace TFlix.Models
 {
     public class Gere
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
-        [ForeignKey("Admin")]
+        [Key, ForeignKey("Admin")]
         public int AdminFK { get; set; }
         public Admin Admin { get; set; }
 
-        [ForeignKey("Utilizador")]
+        [Key, ForeignKey("Utilizador")]
         public int UtilizadorFK { get; set; }
 
         public Utilizador Utilizador { get; set; }

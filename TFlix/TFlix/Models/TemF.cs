@@ -5,13 +5,13 @@ namespace TFlix.Models
 {
     public class TemF
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
-        [ForeignKey("Subscricao")]
+        [Key, ForeignKey("Subscricao")]
         public int SubcricaoFK { get; set; }
         public Subscricao Subcricao { get; set; }
 
-        [ForeignKey("Filme")]
+        [Key, ForeignKey("Filme")]
         public int FilmeFK { get; set; }
         public Filme Filme { get; set; }
 
