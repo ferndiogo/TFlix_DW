@@ -5,13 +5,13 @@ namespace TFlix.Models
 {
     public class Aluga
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
 
         [ForeignKey("Utilizador")]
         public int UtilizadorFK { get; set; }
         public Utilizador Utilizador { get; set; }
 
-        [ForeignKey("Filme")]
+        [Key, ForeignKey("Filme")]
         public int FilmeFK { get; set; }
         public Filme Filme { get; set; }
 
