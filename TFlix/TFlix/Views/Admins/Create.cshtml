@@ -4,3 +4,40 @@
     ViewData["Title"] = "Create";
 }
 
+<h1 style ="color:white">Create</h1>
+
+<h4 style ="color:white">Admin</h4>
+<hr />
+<div class="rowCreate" align = "center">
+    <div class="col formCreate">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-g">
+                <label asp-for="Nome" class="row control-label regLabel"></label>
+                <input asp-for="Nome" class="row form-n" />
+                <span asp-validation-for="Nome" class="row text-danger"></span>
+            </div>
+            <div class="form-g">
+                <label asp-for="Email" class="row control-label regLabel"></label>
+                <input asp-for="Email" class="row form-n" />
+                <span asp-validation-for="Email" class="row text-danger"></span>
+            </div>
+            <div class="form-g">
+                <label asp-for="Password" class="row control-label regLabel"></label>
+                <input type="password" asp-for="Password" class="row form-n" />
+                <span asp-validation-for="Password" class="row text-danger"></span>
+            </div>
+            <div class="form-g">
+                <input type="submit" value="Create" class="button-34" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
