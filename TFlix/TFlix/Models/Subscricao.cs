@@ -11,7 +11,7 @@ namespace TFlix.Models
 
         public int Id { get; set; }
 
-        [ForeignKey("Utilizador")]
+        [ForeignKey(nameof(Utilizador))]
         public int UtilizadorFK { get; set; }
         public Utilizador Utilizador { get; set; }
 

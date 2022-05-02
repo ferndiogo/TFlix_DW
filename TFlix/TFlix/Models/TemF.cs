@@ -7,11 +7,11 @@ namespace TFlix.Models
     {
         //public int Id { get; set; }
 
-        [Key, ForeignKey("Subscricao")]
+        [Key, ForeignKey(nameof(Subscricao))]
         public int SubcricaoFK { get; set; }
         public Subscricao Subscricao { get; set; }
 
-        [Key, ForeignKey("Filme")]
+        [Key, ForeignKey(nameof(Filme))]
         public int FilmeFK { get; set; }
         public Filme Filme { get; set; }
 
