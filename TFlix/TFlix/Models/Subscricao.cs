@@ -7,6 +7,8 @@ namespace TFlix.Models
         public Subscricao()
         {
             Series = new HashSet<Serie>();
+
+            Filmes = new HashSet<Filme>();
         }
 
         public int Id { get; set; }
@@ -19,9 +21,11 @@ namespace TFlix.Models
 
         public double Preco { get; set; }
 
-        public DateTime DataSub { get; set; }
+        public DateTime Data { get; set; }
 
         public ICollection<Serie> Series { get; set; }
+
+        public ICollection<Filme> Filmes { get; set; }
 
     }
 }

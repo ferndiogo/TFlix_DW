@@ -22,6 +22,21 @@ namespace TFlix.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("AdminUtilizador", b =>
+                {
+                    b.Property<int>("AdministradoresId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UtilizadoresId")
+                        .HasColumnType("int");
+
+                    b.HasKey("AdministradoresId", "UtilizadoresId");
+
+                    b.HasIndex("UtilizadoresId");
+
+                    b.ToTable("AdminUtilizador");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -224,6 +239,21 @@ namespace TFlix.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("SerieSubscricao", b =>
+                {
+                    b.Property<int>("SeriesId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("SubscricoesId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SeriesId", "SubscricoesId");
+
+                    b.HasIndex("SubscricoesId");
+
+                    b.ToTable("SerieSubscricao");
+                });
+
             modelBuilder.Entity("TFlix.Admin", b =>
                 {
                     b.Property<int>("Id")
@@ -233,15 +263,12 @@ namespace TFlix.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -251,12 +278,6 @@ namespace TFlix.Data.Migrations
 
             modelBuilder.Entity("TFlix.Models.Aluga", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
                     b.Property<int>("FilmeFK")
                         .HasColumnType("int");
 
@@ -269,9 +290,7 @@ namespace TFlix.Data.Migrations
                     b.Property<int>("UtilizadorFK")
                         .HasColumnType("int");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("FilmeFK");
+                    b.HasKey("FilmeFK");
 
                     b.HasIndex("UtilizadorFK");
 
@@ -286,59 +305,35 @@ namespace TFlix.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Atores")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Classificacao")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("DataC")
+                    b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Diretor")
-                        .IsRequired()
+                    b.Property<string>("Elenco")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Género")
-                        .IsRequired()
+                    b.Property<string>("Genero")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Imagem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sinopse")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SubscricaoId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("SubscricaoId");
 
                     b.ToTable("Filmes");
-                });
-
-            modelBuilder.Entity("TFlix.Models.Gere", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("AdminFK")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UtilizadorFK")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AdminFK");
-
-                    b.HasIndex("UtilizadorFK");
-
-                    b.ToTable("Gestao");
                 });
 
             modelBuilder.Entity("TFlix.Models.Serie", b =>
@@ -349,39 +344,28 @@ namespace TFlix.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<string>("Atores")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Classificacao")
+                        .HasColumnType("int");
 
-                    b.Property<DateTime>("DataC")
+                    b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("Diretor")
-                        .IsRequired()
+                    b.Property<string>("Elenco")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Género")
-                        .IsRequired()
+                    b.Property<string>("Genero")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Imagem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sinopse")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int?>("SubscricaoId")
-                        .HasColumnType("int");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SubscricaoId");
 
                     b.ToTable("Series");
                 });
@@ -394,7 +378,7 @@ namespace TFlix.Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataSub")
+                    b.Property<DateTime>("Data")
                         .HasColumnType("datetime2");
 
                     b.Property<int>("Duracao")
@@ -413,58 +397,6 @@ namespace TFlix.Data.Migrations
                     b.ToTable("Subscricoes");
                 });
 
-            modelBuilder.Entity("TFlix.Models.TemF", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("FilmeFK")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubcricaoFK")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubcricaoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("FilmeFK");
-
-                    b.HasIndex("SubcricaoId");
-
-                    b.ToTable("SubFilme");
-                });
-
-            modelBuilder.Entity("TFlix.Models.TemS", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int>("SerieFK")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubcricaoFK")
-                        .HasColumnType("int");
-
-                    b.Property<int>("SubcricaoId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("SerieFK");
-
-                    b.HasIndex("SubcricaoId");
-
-                    b.ToTable("SubSerie");
-                });
-
             modelBuilder.Entity("TFlix.Models.Utilizador", b =>
                 {
                     b.Property<int>("Id")
@@ -474,28 +406,38 @@ namespace TFlix.Data.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Morada")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIF")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Utilizadores");
+                });
+
+            modelBuilder.Entity("AdminUtilizador", b =>
+                {
+                    b.HasOne("TFlix.Admin", null)
+                        .WithMany()
+                        .HasForeignKey("AdministradoresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TFlix.Models.Utilizador", null)
+                        .WithMany()
+                        .HasForeignKey("UtilizadoresId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -549,6 +491,21 @@ namespace TFlix.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("SerieSubscricao", b =>
+                {
+                    b.HasOne("TFlix.Models.Serie", null)
+                        .WithMany()
+                        .HasForeignKey("SeriesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TFlix.Models.Subscricao", null)
+                        .WithMany()
+                        .HasForeignKey("SubscricoesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("TFlix.Models.Aluga", b =>
                 {
                     b.HasOne("TFlix.Models.Filme", "Filme")
@@ -568,29 +525,10 @@ namespace TFlix.Data.Migrations
                     b.Navigation("Utilizador");
                 });
 
-            modelBuilder.Entity("TFlix.Models.Gere", b =>
-                {
-                    b.HasOne("TFlix.Admin", "Admin")
-                        .WithMany("GereTable")
-                        .HasForeignKey("AdminFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TFlix.Models.Utilizador", "Utilizador")
-                        .WithMany("GereTable")
-                        .HasForeignKey("UtilizadorFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Admin");
-
-                    b.Navigation("Utilizador");
-                });
-
-            modelBuilder.Entity("TFlix.Models.Serie", b =>
+            modelBuilder.Entity("TFlix.Models.Filme", b =>
                 {
                     b.HasOne("TFlix.Models.Subscricao", null)
-                        .WithMany("Series")
+                        .WithMany("Filmes")
                         .HasForeignKey("SubscricaoId");
                 });
 
@@ -605,71 +543,19 @@ namespace TFlix.Data.Migrations
                     b.Navigation("Utilizador");
                 });
 
-            modelBuilder.Entity("TFlix.Models.TemF", b =>
-                {
-                    b.HasOne("TFlix.Models.Filme", "Filme")
-                        .WithMany("TemFilmes")
-                        .HasForeignKey("FilmeFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TFlix.Models.Subscricao", "Subcricao")
-                        .WithMany()
-                        .HasForeignKey("SubcricaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Filme");
-
-                    b.Navigation("Subcricao");
-                });
-
-            modelBuilder.Entity("TFlix.Models.TemS", b =>
-                {
-                    b.HasOne("TFlix.Models.Serie", "Serie")
-                        .WithMany("TemSeries")
-                        .HasForeignKey("SerieFK")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("TFlix.Models.Subscricao", "Subcricao")
-                        .WithMany()
-                        .HasForeignKey("SubcricaoId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Serie");
-
-                    b.Navigation("Subcricao");
-                });
-
-            modelBuilder.Entity("TFlix.Admin", b =>
-                {
-                    b.Navigation("GereTable");
-                });
-
             modelBuilder.Entity("TFlix.Models.Filme", b =>
                 {
                     b.Navigation("Aluguer");
-
-                    b.Navigation("TemFilmes");
-                });
-
-            modelBuilder.Entity("TFlix.Models.Serie", b =>
-                {
-                    b.Navigation("TemSeries");
                 });
 
             modelBuilder.Entity("TFlix.Models.Subscricao", b =>
                 {
-                    b.Navigation("Series");
+                    b.Navigation("Filmes");
                 });
 
             modelBuilder.Entity("TFlix.Models.Utilizador", b =>
                 {
                     b.Navigation("Aluguer");
-
-                    b.Navigation("GereTable");
 
                     b.Navigation("Subscricoes");
                 });

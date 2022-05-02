@@ -3,7 +3,6 @@
     public class Filme
     {
         public Filme() {
-            TemFilmes = new HashSet<TemF>();
 
             Aluguer = new HashSet<Aluga>();
         }
@@ -16,15 +15,13 @@
 
         public string Sinopse { get; set; }
 
-        public DateTime DataC { get; set; }
+        public DateTime Data { get; set; }
 
-        public string Diretor { get; set; }
+        public int Classificacao { get; set; }
 
-        public string Atores { get; set; }
+        public string Elenco { get; set; }
 
-        public string Género { get; set; }
-
-        public ICollection<TemF> TemFilmes { get; set; }
+        public string Genero { get; set; }
 
         public ICollection<Aluga> Aluguer { get; set; }
     }
