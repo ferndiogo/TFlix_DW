@@ -9,7 +9,7 @@ namespace TFlix.Models
 
         [Key, ForeignKey("Subscricao")]
         public int SubcricaoFK { get; set; }
-        public Subscricao Subcricao { get; set; }
+        public Subscricao Subscricao { get; set; }
 
         [Key, ForeignKey("Filme")]
         public int FilmeFK { get; set; }
