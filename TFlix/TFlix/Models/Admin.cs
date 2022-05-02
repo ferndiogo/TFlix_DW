@@ -6,7 +6,7 @@ namespace TFlix
     {
         public Admin()
         {
-            GereTable = new HashSet<Gere>();
+            Utilizadores = new HashSet<Utilizador>();
         }
 
 
@@ -18,6 +18,6 @@ namespace TFlix
 
         public string Password { get; set; }
 
-        public ICollection<Gere> GereTable { get; set; }
+        public ICollection<Utilizador> Utilizadores { get; set; }
     }
 }
