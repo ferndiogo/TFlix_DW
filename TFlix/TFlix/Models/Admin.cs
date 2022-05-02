@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.DataAnnotations;
-using TFlix.Models;
+﻿using TFlix.Models;
 
 namespace TFlix
 {
@@ -9,8 +8,8 @@ namespace TFlix
         {
             GereTable = new HashSet<Gere>();
         }
-        
-        
+
+
         public int Id { get; set; }
 
         public string Nome { get; set; }
