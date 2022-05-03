@@ -4,10 +4,9 @@
     {
         public Serie()
         {
-            TemSeries = new HashSet<TemS>();
+            Subscricoes = new HashSet<Subscricao>();
 
         }
-
 
         public int Id { get; set; }
 
@@ -17,14 +16,14 @@
 
         public string Sinopse { get; set; }
 
-        public DateTime DataC { get; set; }
+        public DateTime Data { get; set; }
 
-        public string Diretor { get; set; }
+        public int Classificacao { get; set; }
 
-        public string Atores { get; set; }
+        public string Elenco { get; set; }
 
-        public string Género { get; set; }
+        public string Genero { get; set; }
 
-        public ICollection<TemS> TemSeries { get; set; }
+        public ICollection<Subscricao> Subscricoes { get; set; }
     }
 }

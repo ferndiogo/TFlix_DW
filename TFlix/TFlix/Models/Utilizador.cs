@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
-namespace TFlix.Models
+﻿namespace TFlix.Models
 {
     public class Utilizador
     {
         public Utilizador() {
-            GereTable = new HashSet<Gere>();
+
+            Administradores = new HashSet<Admin>();
 
             Subscricoes = new HashSet<Subscricao>();
 
@@ -24,7 +23,7 @@ namespace TFlix.Models
 
         public string Morada { get; set; }
 
-        public ICollection<Gere> GereTable { get; set; }
+        public ICollection<Admin> Administradores { get; set; }
 
         public ICollection<Subscricao> Subscricoes { get; set; }
 
