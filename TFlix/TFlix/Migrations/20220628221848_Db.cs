@@ -328,6 +328,16 @@ namespace TFlix.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "a", "db9a2c0e-c6a6-4bbf-a8fc-8b91d524e566", "Administrador", "ADMINISTRADOR" });
+
+            migrationBuilder.InsertData(
+                table: "AspNetRoles",
+                columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
+                values: new object[] { "c", "a1c05b1a-519d-4287-a15a-99ea27dcdeb2", "Cliente", "CLIENTE" });
+
             migrationBuilder.CreateIndex(
                 name: "IX_Aluguers_FilmeFK",
                 table: "Aluguers",
