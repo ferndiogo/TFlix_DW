@@ -30,10 +30,6 @@ namespace TFlix.Models
 
         public int Episodio { get; set; }
 
-        [ForeignKey(nameof(Subscricao))]
-        public int SubscricaoFK { get; set; }
-        public Utilizador Subscricao { get; set; }
-
         public ICollection<Subscricao> Subscricoes { get; set; }
     }
 }

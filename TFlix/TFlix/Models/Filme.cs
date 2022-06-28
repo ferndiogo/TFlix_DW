@@ -27,9 +27,6 @@ namespace TFlix.Models
 
         public string Genero { get; set; }
 
-        [ForeignKey(nameof(Subscricao))]
-        public int SubscricaoFK { get; set; }
-        public Utilizador Subscricao { get; set; }
 
         public ICollection<Aluga> Aluguer { get; set; }
 

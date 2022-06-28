@@ -25,14 +25,6 @@ namespace TFlix.Models
 
         public DateTime DataFim { get; set; }
 
-        [ForeignKey(nameof(Filme))]
-        public int FilmeFK { get; set; }
-        public Utilizador Filme { get; set; }
-
-        [ForeignKey(nameof(Serie))]
-        public int SerieFK { get; set; }
-        public Utilizador Serie { get; set; }
-
         public ICollection<Serie> Series { get; set; }
 
         public ICollection<Filme> Filmes { get; set; }
