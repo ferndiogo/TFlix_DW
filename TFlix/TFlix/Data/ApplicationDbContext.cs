@@ -17,20 +17,20 @@ namespace TFlix.Data
         /// personal name of user to be used at interface
         /// </summary>
         [Required]
-        public string Name { get; set; }
+        public string Nome { get; set; }
 
         /// <summary>
         /// registration date
         /// </summary>
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        public DateTime RegistrationDate { get; set; }
+        public DateTime DataRegisto { get; set; }
 
 
     }
 
 
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)

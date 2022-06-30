@@ -30,5 +30,13 @@
         public ICollection<Subscricao> Subscricoes { get; set; }
 
         public ICollection<Aluga> Aluguer { get; set; }
+
+        //########################################################################
+        /// <summary>
+        /// this FK is used to connect our 'business data' to 'authetication DB'
+        /// </summary>
+        public string UserID { get; set; }
+        //########################################################################
+
     }
 }
