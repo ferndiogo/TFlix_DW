@@ -132,9 +132,22 @@ namespace TFlix.Areas.Identity.Pages.Account
                 await _userStore.SetUserNameAsync(user, Input.Email, CancellationToken.None);
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
 
+                //bool cliente = User.IsInRole("Cliente");
+
                 // add Name and RegistrationDate to the 'user
                 user.Nome = Input.Utilizador.Nome;
                 user.DataRegisto = DateTime.Now;
+                
+
+                //if (cliente)
+                //{
+                //    user.Funcao  = "Cliente";
+                //}
+                //else {
+                //    user.Funcao  = "Administrador";
+                //}
+
+
 
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
@@ -145,6 +158,16 @@ namespace TFlix.Areas.Identity.Pages.Account
                     // all users registed by this way are 'Clients'
                     await _userManager.AddToRoleAsync(user, "Cliente");
 
+                    bool cliente = User.IsInRole("Cliente");
+
+                    if (cliente)
+                    {
+                        Input.Utilizador.UserF =  "Cliente";
+                    }
+                    else {
+                        Input.Utilizador.UserF = "Administrador";
+                    }
+
 
                     // **********************************************************
                     // save the owner's data
@@ -152,6 +175,7 @@ namespace TFlix.Areas.Identity.Pages.Account
                     // add data that is missing from owner's data
                     Input.Utilizador.Email = Input.Email;
                     Input.Utilizador.UserID = user.Id;
+                    
 
                     try
                     {

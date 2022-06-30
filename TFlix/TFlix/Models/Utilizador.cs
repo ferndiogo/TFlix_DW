@@ -25,7 +25,7 @@
 
         public string Sexo { get; set; }
 
-        public DateTime DataNasc { get; set; }
+        public string DataNasc { get; set; }
 
         public ICollection<Subscricao> Subscricoes { get; set; }
 
@@ -38,5 +38,11 @@
         public string UserID { get; set; }
         //########################################################################
 
+        //########################################################################
+        /// <summary>
+        /// this FK is used to connect our 'business data' to 'authetication DB'
+        /// </summary>
+        public string UserF { get; set; }
+        //########################################################################
     }
 }

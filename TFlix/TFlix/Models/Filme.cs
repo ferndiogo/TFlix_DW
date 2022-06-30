@@ -19,7 +19,7 @@ namespace TFlix.Models
 
         public string Sinopse { get; set; }
 
-        public DateTime DataCriacao { get; set; }
+        public string DataCriacao { get; set; }
 
         public int Classificacao { get; set; }
 

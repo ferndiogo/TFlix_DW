@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TFlix.Data;
 
@@ -11,9 +12,10 @@ using TFlix.Data;
 namespace TFlix.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220630163021_AddSeedFilmesSeries")]
+    partial class AddSeedFilmesSeries
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,23 +69,16 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "d0fc05c6-9533-428a-b9e7-7a1572b3d4d1",
+                            ConcurrencyStamp = "7e52447e-8420-4fc3-869c-ff22b1d6d3b7",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "0d936d5c-3152-46c2-92b3-278f3524d620",
+                            ConcurrencyStamp = "befb1ec7-661b-4f1b-9211-f7b6759a85b2",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
-                        },
-                        new
-                        {
-                            Id = "s",
-                            ConcurrencyStamp = "4817a743-1f7d-4e28-84e1-346f779b1737",
-                            Name = "Subscritor",
-                            NormalizedName = "SUBSCRITOR"
                         });
                 });
 
@@ -368,7 +363,7 @@ namespace TFlix.Migrations
                             DataCriacao = "26 de maio de 2022",
                             Elenco = "Elsa Pataky, Luke Bracey",
                             Genero = "Ação",
-                            Imagem = "Interceptor.jpg",
+                            Imagem = "Interceptor.jpeg",
                             Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
                             Titulo = "Interceptor"
                         });
@@ -435,7 +430,7 @@ namespace TFlix.Migrations
                             Elenco = "Millie Bobby Brown, Finn Wolfhard",
                             Episodio = 32,
                             Genero = "Terror",
-                            Imagem = "StrangerThings.jpg",
+                            Imagem = "StrangerThings.jpeg",
                             Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
                             Temporada = 4,
                             Titulo = "Stranger Things"

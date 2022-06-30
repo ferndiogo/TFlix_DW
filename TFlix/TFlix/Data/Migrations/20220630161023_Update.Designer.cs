@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TFlix.Data;
 
@@ -11,9 +12,10 @@ using TFlix.Data;
 namespace TFlix.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220630161023_Update")]
+    partial class Update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,23 +69,16 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "d0fc05c6-9533-428a-b9e7-7a1572b3d4d1",
+                            ConcurrencyStamp = "55c52d57-f2fe-42b0-8393-df8f117cd7f9",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "0d936d5c-3152-46c2-92b3-278f3524d620",
+                            ConcurrencyStamp = "cb75884c-e6e9-4917-b0aa-cd4e1cc29dcc",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
-                        },
-                        new
-                        {
-                            Id = "s",
-                            ConcurrencyStamp = "4817a743-1f7d-4e28-84e1-346f779b1737",
-                            Name = "Subscritor",
-                            NormalizedName = "SUBSCRITOR"
                         });
                 });
 
@@ -327,8 +322,8 @@ namespace TFlix.Migrations
                     b.Property<int>("Classificacao")
                         .HasColumnType("int");
 
-                    b.Property<string>("DataCriacao")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Elenco")
                         .HasColumnType("nvarchar(max)");
@@ -348,30 +343,6 @@ namespace TFlix.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Filmes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Classificacao = 83,
-                            DataCriacao = "5 de maio de 2022",
-                            Elenco = "Elizabeth Olsen, Benedict Cumberbatch",
-                            Genero = "Terror",
-                            Imagem = "DoctorStrange.jpeg",
-                            Sinopse = "O aguardado filme trata da jornada do Doutor Estranho rumo ao desconhecido.",
-                            Titulo = "Doctor Strange in the Multiverse of Madness"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Classificacao = 60,
-                            DataCriacao = "26 de maio de 2022",
-                            Elenco = "Elsa Pataky, Luke Bracey",
-                            Genero = "Ação",
-                            Imagem = "Interceptor.jpg",
-                            Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
-                            Titulo = "Interceptor"
-                        });
                 });
 
             modelBuilder.Entity("TFlix.Models.Serie", b =>
@@ -385,8 +356,8 @@ namespace TFlix.Migrations
                     b.Property<int>("Classificacao")
                         .HasColumnType("int");
 
-                    b.Property<string>("DataCriacao")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Elenco")
                         .HasColumnType("nvarchar(max)");
@@ -412,34 +383,6 @@ namespace TFlix.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Series");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Classificacao = 90,
-                            DataCriacao = "18 de Setembro de 2020",
-                            Elenco = "Sarah Paulson, Finn Wittrock",
-                            Episodio = 8,
-                            Genero = "Drama",
-                            Imagem = "Ratched.jpeg",
-                            Sinopse = "Mildred Ratched começa a trabalhar como enfermeira em um hospital psiquiátrico.",
-                            Temporada = 1,
-                            Titulo = "Ratched"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Classificacao = 96,
-                            DataCriacao = "15 de julho de 2016",
-                            Elenco = "Millie Bobby Brown, Finn Wolfhard",
-                            Episodio = 32,
-                            Genero = "Terror",
-                            Imagem = "StrangerThings.jpg",
-                            Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
-                            Temporada = 4,
-                            Titulo = "Stranger Things"
-                        });
                 });
 
             modelBuilder.Entity("TFlix.Models.Subscricao", b =>
