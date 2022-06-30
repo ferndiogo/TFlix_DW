@@ -1,95 +1,94 @@
-﻿#nullable disable
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
-using TFlix;
 using TFlix.Data;
+using TFlix.Models;
 
 namespace TFlix.Controllers
 {
-    public class AdminsController : Controller
+    public class UtilizadoresController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public AdminsController(ApplicationDbContext context)
+        public UtilizadoresController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Admins
+        // GET: Utilizadores
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Admins.ToListAsync());
+              return View(await _context.Utilizadores.ToListAsync());
         }
 
-        // GET: Admins/Details/5
+        // GET: Utilizadores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Utilizadores == null)
             {
                 return NotFound();
             }
 
-            var admin = await _context.Admins
+            var utilizador = await _context.Utilizadores
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (admin == null)
+            if (utilizador == null)
             {
                 return NotFound();
             }
 
-            return View(admin);
+            return View(utilizador);
         }
 
-        // GET: Admins/Create
+        // GET: Utilizadores/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Admins/Create
+        // POST: Utilizadores/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Email,Password")] Admin admin)
+        public async Task<IActionResult> Create([Bind("Id,Nome,Email,NIF,Morada,Pais,CodPostal,Sexo,DataNasc,UserID,UserF")] Utilizador utilizador)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(admin);
+                _context.Add(utilizador);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(admin);
+            return View(utilizador);
         }
 
-        // GET: Admins/Edit/5
+        // GET: Utilizadores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Utilizadores == null)
             {
                 return NotFound();
             }
 
-            var admin = await _context.Admins.FindAsync(id);
-            if (admin == null)
+            var utilizador = await _context.Utilizadores.FindAsync(id);
+            if (utilizador == null)
             {
                 return NotFound();
             }
-            return View(admin);
+            return View(utilizador);
         }
 
-        // POST: Admins/Edit/5
+        // POST: Utilizadores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Password")] Admin admin)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,NIF,Morada,Pais,CodPostal,Sexo,DataNasc,UserID,UserF")] Utilizador utilizador)
         {
-            if (id != admin.Id)
+            if (id != utilizador.Id)
             {
                 return NotFound();
             }
@@ -98,12 +97,12 @@ namespace TFlix.Controllers
             {
                 try
                 {
-                    _context.Update(admin);
+                    _context.Update(utilizador);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!AdminExists(admin.Id))
+                    if (!UtilizadorExists(utilizador.Id))
                     {
                         return NotFound();
                     }
@@ -114,41 +113,49 @@ namespace TFlix.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(admin);
+            return View(utilizador);
         }
 
-        // GET: Admins/Delete/5
+        // GET: Utilizadores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+            if (id == null || _context.Utilizadores == null)
             {
                 return NotFound();
             }
 
-            var admin = await _context.Admins
+            var utilizador = await _context.Utilizadores
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (admin == null)
+            if (utilizador == null)
             {
                 return NotFound();
             }
 
-            return View(admin);
+            return View(utilizador);
         }
 
-        // POST: Admins/Delete/5
+        // POST: Utilizadores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var admin = await _context.Admins.FindAsync(id);
-            _context.Admins.Remove(admin);
+            if (_context.Utilizadores == null)
+            {
+                return Problem("Entity set 'ApplicationDbContext.Utilizadores'  is null.");
+            }
+            var utilizador = await _context.Utilizadores.FindAsync(id);
+            if (utilizador != null)
+            {
+                _context.Utilizadores.Remove(utilizador);
+            }
+            
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool AdminExists(int id)
+        private bool UtilizadorExists(int id)
         {
-            return _context.Admins.Any(e => e.Id == id);
+          return _context.Utilizadores.Any(e => e.Id == id);
         }
     }
 }

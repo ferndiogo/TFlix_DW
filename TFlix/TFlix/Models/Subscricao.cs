@@ -21,7 +21,9 @@ namespace TFlix.Models
 
         public double Preco { get; set; }
 
-        public DateTime Data { get; set; }
+        public DateTime DataInicio { get; set; }
+
+        public DateTime DataFim { get; set; }
 
         public ICollection<Serie> Series { get; set; }
 

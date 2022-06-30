@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TFlix.Data;
 
@@ -11,13 +12,14 @@ using TFlix.Data;
 namespace TFlix.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220628221848_Db")]
+    partial class Db
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.4")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -67,23 +69,16 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "d0fc05c6-9533-428a-b9e7-7a1572b3d4d1",
+                            ConcurrencyStamp = "db9a2c0e-c6a6-4bbf-a8fc-8b91d524e566",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "0d936d5c-3152-46c2-92b3-278f3524d620",
+                            ConcurrencyStamp = "a1c05b1a-519d-4287-a15a-99ea27dcdeb2",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
-                        },
-                        new
-                        {
-                            Id = "s",
-                            ConcurrencyStamp = "4817a743-1f7d-4e28-84e1-346f779b1737",
-                            Name = "Subscritor",
-                            NormalizedName = "SUBSCRITOR"
                         });
                 });
 
@@ -110,6 +105,71 @@ namespace TFlix.Migrations
                     b.HasIndex("RoleId");
 
                     b.ToTable("AspNetRoleClaims", (string)null);
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AccessFailedCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<bool>("EmailConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("LockoutEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd")
+                        .HasColumnType("datetimeoffset");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PhoneNumber")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("PhoneNumberConfirmed")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("SecurityStamp")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TwoFactorEnabled")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasDatabaseName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasDatabaseName("UserNameIndex")
+                        .HasFilter("[NormalizedUserName] IS NOT NULL");
+
+                    b.ToTable("AspNetUsers", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -212,76 +272,23 @@ namespace TFlix.Migrations
                     b.ToTable("SerieSubscricao");
                 });
 
-            modelBuilder.Entity("TFlix.Data.ApplicationUser", b =>
+            modelBuilder.Entity("TFlix.Admin", b =>
                 {
-                    b.Property<string>("Id")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("AccessFailedCount")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("DataRegisto")
-                        .HasColumnType("datetime2");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("Email")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<bool>("EmailConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<bool>("LockoutEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd")
-                        .HasColumnType("datetimeoffset");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
-
-                    b.Property<string>("PasswordHash")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("PhoneNumber")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("PhoneNumberConfirmed")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("SecurityStamp")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("TwoFactorEnabled")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256)
-                        .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("NormalizedEmail")
-                        .HasDatabaseName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasDatabaseName("UserNameIndex")
-                        .HasFilter("[NormalizedUserName] IS NOT NULL");
-
-                    b.ToTable("AspNetUsers", (string)null);
+                    b.ToTable("Admins");
                 });
 
             modelBuilder.Entity("TFlix.Models.Aluga", b =>
@@ -327,8 +334,8 @@ namespace TFlix.Migrations
                     b.Property<int>("Classificacao")
                         .HasColumnType("int");
 
-                    b.Property<string>("DataCriacao")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Elenco")
                         .HasColumnType("nvarchar(max)");
@@ -348,30 +355,6 @@ namespace TFlix.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Filmes");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Classificacao = 83,
-                            DataCriacao = "5 de maio de 2022",
-                            Elenco = "Elizabeth Olsen, Benedict Cumberbatch",
-                            Genero = "Terror",
-                            Imagem = "DoctorStrange.jpeg",
-                            Sinopse = "O aguardado filme trata da jornada do Doutor Estranho rumo ao desconhecido.",
-                            Titulo = "Doctor Strange in the Multiverse of Madness"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Classificacao = 60,
-                            DataCriacao = "26 de maio de 2022",
-                            Elenco = "Elsa Pataky, Luke Bracey",
-                            Genero = "Ação",
-                            Imagem = "Interceptor.jpg",
-                            Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
-                            Titulo = "Interceptor"
-                        });
                 });
 
             modelBuilder.Entity("TFlix.Models.Serie", b =>
@@ -385,8 +368,8 @@ namespace TFlix.Migrations
                     b.Property<int>("Classificacao")
                         .HasColumnType("int");
 
-                    b.Property<string>("DataCriacao")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DataCriacao")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Elenco")
                         .HasColumnType("nvarchar(max)");
@@ -412,34 +395,6 @@ namespace TFlix.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Series");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            Classificacao = 90,
-                            DataCriacao = "18 de Setembro de 2020",
-                            Elenco = "Sarah Paulson, Finn Wittrock",
-                            Episodio = 8,
-                            Genero = "Drama",
-                            Imagem = "Ratched.jpeg",
-                            Sinopse = "Mildred Ratched começa a trabalhar como enfermeira em um hospital psiquiátrico.",
-                            Temporada = 1,
-                            Titulo = "Ratched"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            Classificacao = 96,
-                            DataCriacao = "15 de julho de 2016",
-                            Elenco = "Millie Bobby Brown, Finn Wolfhard",
-                            Episodio = 32,
-                            Genero = "Terror",
-                            Imagem = "StrangerThings.jpg",
-                            Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
-                            Temporada = 4,
-                            Titulo = "Stranger Things"
-                        });
                 });
 
             modelBuilder.Entity("TFlix.Models.Subscricao", b =>
@@ -504,12 +459,6 @@ namespace TFlix.Migrations
                     b.Property<string>("Sexo")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("UserF")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("UserID")
-                        .HasColumnType("nvarchar(max)");
-
                     b.HasKey("Id");
 
                     b.ToTable("Utilizadores");
@@ -541,7 +490,7 @@ namespace TFlix.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
                 {
-                    b.HasOne("TFlix.Data.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -550,7 +499,7 @@ namespace TFlix.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserLogin<string>", b =>
                 {
-                    b.HasOne("TFlix.Data.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -565,7 +514,7 @@ namespace TFlix.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("TFlix.Data.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -574,7 +523,7 @@ namespace TFlix.Migrations
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserToken<string>", b =>
                 {
-                    b.HasOne("TFlix.Data.ApplicationUser", null)
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)

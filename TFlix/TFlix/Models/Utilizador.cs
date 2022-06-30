@@ -4,8 +4,6 @@
     {
         public Utilizador() {
 
-            Administradores = new HashSet<Admin>();
-
             Subscricoes = new HashSet<Subscricao>();
 
             Aluguer = new HashSet<Aluga>();
@@ -17,16 +15,34 @@
 
         public string Email { get; set; }
 
-        public string Password { get; set; }
-
         public string NIF { get; set; }
 
         public string Morada { get; set; }
 
-        public ICollection<Admin> Administradores { get; set; }
+        public string Pais { get; set; }
+
+        public string CodPostal { get; set; }
+
+        public string Sexo { get; set; }
+
+        public string DataNasc { get; set; }
 
         public ICollection<Subscricao> Subscricoes { get; set; }
 
         public ICollection<Aluga> Aluguer { get; set; }
+
+        //########################################################################
+        /// <summary>
+        /// this FK is used to connect our 'business data' to 'authetication DB'
+        /// </summary>
+        public string UserID { get; set; }
+        //########################################################################
+
+        //########################################################################
+        /// <summary>
+        /// this FK is used to connect our 'business data' to 'authetication DB'
+        /// </summary>
+        public string UserF { get; set; }
+        //########################################################################
     }
 }

@@ -1,0 +1,100 @@
+﻿@model IEnumerable<TFlix.Models.Subscricao>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+@if (User.IsInRole("Administrador")) {
+
+    <h1>Lista de Utilizadores</h1>
+
+<p>
+    <a asp-action="Create">Criar novos Subscrições</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Utilizador)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Duracao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Preco)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataInicio)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DataFim)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Utilizador.Id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Duracao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Preco)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataInicio)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataFim)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Detalhes</a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Apagar</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}
+
+<h1>Susbcrições</h1>
+
+ <div class="columns">
+  <ul class="price">
+    <li class="header">Basic</li>
+    <li class="grey">$ 9.99 / year</li>
+    <li>10GB Storage</li>
+    <li>10 Emails</li>
+    <li>10 Domains</li>
+    <li>1GB Bandwidth</li>
+    <li class="grey"><a href="#" class="button">Sign Up</a></li>
+  </ul>
+</div> 
+
+ <div class="columns">
+  <ul class="price">
+    <li class="header">Basic</li>
+    <li class="grey">$ 9.99 / year</li>
+    <li>10GB Storage</li>
+    <li>10 Emails</li>
+    <li>10 Domains</li>
+    <li>1GB Bandwidth</li>
+    <li class="grey"><a href="#" class="button">Sign Up</a></li>
+  </ul>
+</div> 
+
+ <div class="columns">
+  <ul class="price">
+    <li class="header">Basic</li>
+    <li class="grey">$ 9.99 / year</li>
+    <li>10GB Storage</li>
+    <li>10 Emails</li>
+    <li>10 Domains</li>
+    <li>1GB Bandwidth</li>
+    <li class="grey"><a href="#" class="button">Sign Up</a></li>
+  </ul>
+</div> 

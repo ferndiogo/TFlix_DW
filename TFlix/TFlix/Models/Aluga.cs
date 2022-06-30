@@ -5,7 +5,9 @@ namespace TFlix.Models
 {
     public class Aluga
     {
-        [Key, ForeignKey(nameof(Filme))]
+        public int Id { get; set; }
+
+        [ForeignKey(nameof(Filme))]
         public int FilmeFK { get; set; }
         public Filme Filme { get; set; }
 
@@ -15,9 +17,9 @@ namespace TFlix.Models
 
         public double Preco { get; set; }
 
-        public int TempoAluguer { get; set; }
+        public DateTime DataInicio { get; set; }
 
-        
+        public DateTime DataFim { get; set; }
 
     }
 
