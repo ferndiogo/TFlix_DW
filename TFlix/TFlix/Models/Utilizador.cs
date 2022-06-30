@@ -25,7 +25,7 @@
 
         public string Sexo { get; set; }
 
-        public string DataNasc { get; set; }
+        public DateTime DataNasc { get; set; }
 
         public ICollection<Subscricao> Subscricoes { get; set; }
 

@@ -87,19 +87,18 @@ body {
     height: 300px;
     margin: auto;
     display: block;
-   
-    
 }
 
 img{
     display: block;
     margin: auto;
     margin-bottom: 8px;
-    
-    
-
 }
 
+h1,h2 {
+    color:#ffffff;
+    text-align:center;
+}
 
 
 
