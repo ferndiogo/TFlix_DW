@@ -1,16 +1,16 @@
 ﻿@model TFlix.Models.Filme
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Criar";
 }
 
-<h1>Create</h1>
+<h1>Criar</h1>
 
 <h4>Filme</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Titulo" class="control-label"></label>
@@ -19,7 +19,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Imagem" class="control-label"></label>
-                <input asp-for="Imagem" class="form-control" />
+                <input type="file" name="novoFilme" class="form-control" accept=".jpg,.png,.jpeg"/>
                 <span asp-validation-for="Imagem" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,13 +48,13 @@
                 <span asp-validation-for="Genero" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Criar" class="button-34 " />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Voltar à lista</a>
 </div>
 

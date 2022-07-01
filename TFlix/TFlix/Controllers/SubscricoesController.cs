@@ -15,25 +15,11 @@ namespace TFlix.Controllers
 {
     public class SubscricoesController : Controller
     {
-
-        private readonly UserManager<ApplicationUser> _userManager;
-
         private readonly ApplicationDbContext _context;
-
 
         public SubscricoesController(ApplicationDbContext context)
         {
             _context = context;
-        }
-
-        public async Task<IActionResult> EditarRole()
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(e => e.Id == e.Id);
-
-            // Add that user to the admin role:
-            await _userManager.AddToRoleAsync(user, "Subscritor");
-            await _context.SaveChangesAsync();
-            return View(ViewBag);
         }
 
         // GET: Subscricoes
@@ -181,5 +167,7 @@ namespace TFlix.Controllers
         {
           return _context.Subscricoes.Any(e => e.Id == id);
         }
+
+
     }
 }

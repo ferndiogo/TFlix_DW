@@ -32,7 +32,6 @@ namespace TFlix.Models
         /// </summary>
         [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
         [Display(Name = "Duração")]
-        [RegularExpression("[0-9]{20}", ErrorMessage = "Só pode escrever números no {0}")]
         public int Duracao { get; set; }
 
         /// <summary>
@@ -40,7 +39,7 @@ namespace TFlix.Models
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
         [Display(Name = "Preço")]
-        [RegularExpression("[0-9]{4}[,][0-9]{2}", ErrorMessage = "O {0} deve ter o seguinte formato xxxx,xx.")]
+        [RegularExpression("4.99|8.99|80", ErrorMessage = "O {0} só pode ser. 4.99, 8.99 ou 80 correspondente ás diferentes subscrições.")]
         public double Preco { get; set; }
 
 

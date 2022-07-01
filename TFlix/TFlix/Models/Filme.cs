@@ -24,15 +24,12 @@ namespace TFlix.Models
         /// Título do filme
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        [StringLength(30, ErrorMessage = "O {0} não pode ter mais do que {1} carateres.")]
+        [StringLength(100, ErrorMessage = "O {0} não pode ter mais do que {1} carateres.")]
         [Display(Name = "Título")]
         public string Titulo { get; set; }
 
         /// <summary>
         /// Imagem do filme
-        /// </summary>
-        [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
-        [Display(Name = "Imagem")]
         public string Imagem { get; set; }
 
         /// <summary>

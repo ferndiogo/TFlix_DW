@@ -44,8 +44,8 @@ namespace TFlix.Migrations
                 columns: new[] { "Id", "Classificacao", "DataCriacao", "Elenco", "Genero", "Imagem", "Sinopse", "Titulo" },
                 values: new object[,]
                 {
-                    { 1, 83, "5 de maio de 2022", "Elizabeth Olsen, Benedict Cumberbatch", "Terror", "DoctorStrange.jpeg", "O aguardado filme trata da jornada do Doutor Estranho rumo ao desconhecido.", "Doctor Strange in the Multiverse of Madness" },
-                    { 2, 60, "26 de maio de 2022", "Elsa Pataky, Luke Bracey", "Ação", "Interceptor.jpg", "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.", "Interceptor" }
+                    { 1, 4, "5 de maio de 2022", "Elizabeth Olsen, Benedict Cumberbatch", "Terror", "DoctorStrange.jpeg", "O aguardado filme trata da jornada do Doutor Estranho rumo ao desconhecido.", "Doctor Strange" },
+                    { 2, 4, "26 de maio de 2022", "Elsa Pataky, Luke Bracey", "Ação", "Interceptor.jpg", "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.", "Interceptor" }
                 });
 
             migrationBuilder.InsertData(
@@ -53,8 +53,8 @@ namespace TFlix.Migrations
                 columns: new[] { "Id", "Classificacao", "DataCriacao", "Elenco", "Episodio", "Genero", "Imagem", "Sinopse", "Temporada", "Titulo" },
                 values: new object[,]
                 {
-                    { 1, 90, "18 de Setembro de 2020", "Sarah Paulson, Finn Wittrock", 8, "Drama", "Ratched.jpeg", "Mildred Ratched começa a trabalhar como enfermeira em um hospital psiquiátrico.", 1, "Ratched" },
-                    { 2, 96, "15 de julho de 2016", "Millie Bobby Brown, Finn Wolfhard", 32, "Terror", "StrangerThings.jpg", "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.", 4, "Stranger Things" }
+                    { 1, 4, "18 de Setembro de 2020", "Sarah Paulson, Finn Wittrock", 8, "Drama", "Ratched.jpeg", "Mildred Ratched começa a trabalhar como enfermeira em um hospital psiquiátrico.", 1, "Ratched" },
+                    { 2, 3, "15 de julho de 2016", "Millie Bobby Brown, Finn Wolfhard", 32, "Terror", "StrangerThings.jpg", "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.", 4, "Stranger Things" }
                 });
         }
 

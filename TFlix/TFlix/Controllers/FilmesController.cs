@@ -115,7 +115,7 @@ namespace TFlix.Controllers
                 {
                     // ask the server what address it wants to use
                     string addressToStoreFile = _webHostEnvironment.WebRootPath;
-                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//filmed");
+                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Filmes");
                     // see if the folder 'Photos' exists
                     if (!Directory.Exists(newImageLocalization))
                     {
@@ -137,14 +137,25 @@ namespace TFlix.Controllers
         {
             if (id == null || _context.Filmes == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var filme = await _context.Filmes.FindAsync(id);
             if (filme == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
+
+            /* O que quero fazer?
+          * Guardar o ID do médico veterinário para assegurar que não há alterações no browser...
+          */
+            // Session["vet"]= medicoVeterinario.Id;
+            // equivalente ao trabalho que antes era feito com as Var. Session
+            HttpContext.Session.SetInt32("filmeD", filme.Id);
+
+            HttpContext.Session.SetString("filmeImg", filme.Imagem);
+
+            // envio dos dados para a View
             return View(filme);
         }
 
@@ -153,12 +164,60 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero")] Filme filme)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero")] Filme filme, IFormFile novoFilme)
         {
             if (id != filme.Id)
             {
                 return NotFound();
             }
+
+            var filmeIDGuardado = HttpContext.Session.GetInt32("filmeD");
+            var filmeImgGuardada = HttpContext.Session.GetString("filmeImg");
+
+            if (filmeIDGuardado == null)
+            {
+                // what we need to do?
+                // we must decide...
+
+                ModelState.AddModelError("", "You have spent more time than allowed...");
+                return View(filme);
+                // return RedirectToAction("Index");
+            }
+
+            if (filmeIDGuardado != filme.Id)
+            {
+                // if we enter here, something is wrong
+                // what we need to do?????
+
+                return RedirectToAction("Index");
+            }
+
+            if (filmeImgGuardada != "semFoto.png")
+            {
+                System.IO.File.Delete("wwwroot//Fotos//Filmes//" + Path.Combine(filmeImgGuardada));
+            }
+
+
+            if (!(novoFilme.ContentType == "image/jpeg" || novoFilme.ContentType == "image/png" || novoFilme.ContentType == "image/jpg"))
+            {
+                // write the error message
+                ModelState.AddModelError("", "Please, if you want to send a file, please choose an image...");
+                // resend control to view, with data provided by user
+                return View(filme);
+            }
+            else
+            {
+                // define image name
+                Guid g;
+                g = Guid.NewGuid();
+                string imageName = filme.Titulo + "_" + g.ToString();
+                string extensionOfImage = Path.GetExtension(novoFilme.FileName).ToLower();
+                imageName += extensionOfImage;
+                // add image name to vet data
+                filme.Imagem = imageName;
+            }
+
+
 
             if (ModelState.IsValid)
             {
@@ -169,7 +228,7 @@ namespace TFlix.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FilmeExists(filme.Id))
+                    if (!FilmeExiste(filme.Id))
                     {
                         return NotFound();
                     }
@@ -178,6 +237,26 @@ namespace TFlix.Controllers
                         throw;
                     }
                 }
+
+
+                // save image file to disk
+                // ********************************
+                if (novoFilme != null)
+                {
+                    // ask the server what address it wants to use
+                    string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Filmes");
+                    // see if the folder 'Photos' exists
+                    if (!Directory.Exists(newImageLocalization))
+                    {
+                        Directory.CreateDirectory(newImageLocalization);
+                    }
+                    // save image file to disk
+                    newImageLocalization = Path.Combine(newImageLocalization, filme.Imagem);
+                    using var stream = new FileStream(newImageLocalization, FileMode.Create);
+                    await novoFilme.CopyToAsync(stream);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(filme);
@@ -198,6 +277,8 @@ namespace TFlix.Controllers
                 return NotFound();
             }
 
+            HttpContext.Session.SetString("filmeImg", filme.Imagem);
+
             return View(filme);
         }
 
@@ -206,21 +287,36 @@ namespace TFlix.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Filmes == null)
+            var filme1 = await _context.Filmes.FindAsync(id);
+
+            var filmeImgGuardada = HttpContext.Session.GetString("filmeImg");
+
+            try
             {
-                return Problem("Entity set 'ApplicationDbContext.Filmes'  is null.");
+                _context.Filmes.Remove(filme1);
+                await _context.SaveChangesAsync();
+
+                if (filmeImgGuardada != "semFoto.png")
+                {
+                    System.IO.File.Delete("wwwroot//Fotos//Filmes//" + Path.Combine(filmeImgGuardada));
+                }
+
+
+                /*
+                 * you must delete the user's photo
+                 * IF the user is not using the 'noVet.jpg'
+                 */
             }
-            var filme = await _context.Filmes.FindAsync(id);
-            if (filme != null)
+            catch (Exception)
             {
-                _context.Filmes.Remove(filme);
+                // what is going to be done in the 'catch' code?
+                //  throw;
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FilmeExists(int id)
+        private bool FilmeExiste(int id)
         {
           return _context.Filmes.Any(e => e.Id == id);
         }

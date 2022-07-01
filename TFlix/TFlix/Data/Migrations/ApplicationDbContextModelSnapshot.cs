@@ -67,21 +67,21 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "85b785b4-045a-48e0-9c1b-37c3241ddeff",
+                            ConcurrencyStamp = "0784f419-f902-4845-8c9b-fee6d740dfc3",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "73d25faf-4c27-4c14-9285-1623313cc688",
+                            ConcurrencyStamp = "133decdc-5031-4dc1-83bd-41a2f4c72080",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "s",
-                            ConcurrencyStamp = "3cd290db-561c-4ee5-bcad-c5e288ec383e",
+                            ConcurrencyStamp = "d772c14d-27b7-4619-9303-c8ee97fe93b7",
                             Name = "Subscritor",
                             NormalizedName = "SUBSCRITOR"
                         });
@@ -234,6 +234,9 @@ namespace TFlix.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("Funcao")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -344,7 +347,6 @@ namespace TFlix.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Imagem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sinopse")
@@ -354,8 +356,8 @@ namespace TFlix.Migrations
 
                     b.Property<string>("Titulo")
                         .IsRequired()
-                        .HasMaxLength(30)
-                        .HasColumnType("nvarchar(30)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("Id");
 
@@ -365,18 +367,18 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = 1,
-                            Classificacao = 83,
+                            Classificacao = 4,
                             DataCriacao = "5 de maio de 2022",
                             Elenco = "Elizabeth Olsen, Benedict Cumberbatch",
                             Genero = "Terror",
                             Imagem = "DoctorStrange.jpeg",
                             Sinopse = "O aguardado filme trata da jornada do Doutor Estranho rumo ao desconhecido.",
-                            Titulo = "Doctor Strange in the Multiverse of Madness"
+                            Titulo = "Doctor Strange"
                         },
                         new
                         {
                             Id = 2,
-                            Classificacao = 60,
+                            Classificacao = 3,
                             DataCriacao = "26 de maio de 2022",
                             Elenco = "Elsa Pataky, Luke Bracey",
                             Genero = "Ação",
@@ -415,7 +417,6 @@ namespace TFlix.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Imagem")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sinopse")
@@ -439,7 +440,7 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = 1,
-                            Classificacao = 90,
+                            Classificacao = 4,
                             DataCriacao = "18 de Setembro de 2020",
                             Elenco = "Sarah Paulson, Finn Wittrock",
                             Episodio = 8,
@@ -452,7 +453,7 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = 2,
-                            Classificacao = 96,
+                            Classificacao = 4,
                             DataCriacao = "15 de julho de 2016",
                             Elenco = "Millie Bobby Brown, Finn Wolfhard",
                             Episodio = 32,

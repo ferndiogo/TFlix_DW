@@ -159,13 +159,18 @@ namespace TFlix.Areas.Identity.Pages.Account
                     await _userManager.AddToRoleAsync(user, "Cliente");
 
 
+                    
+                    user.Funcao  = "Cliente";
+                    
+
                     // **********************************************************
                     // save the owner's data
                     // **********************************************************
                     // add data that is missing from owner's data
                     Input.Utilizador.Email = Input.Email;
                     Input.Utilizador.UserID = user.Id;
-                    
+                    Input.Utilizador.UserF = user.Funcao;
+
 
                     try
                     {
