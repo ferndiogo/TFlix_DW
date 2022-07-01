@@ -2,21 +2,38 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
 using TFlix.Models;
+using TFlix.Areas.Identity.Pages.Account;
+
 
 namespace TFlix.Controllers
 {
     public class SubscricoesController : Controller
     {
+
+        private readonly UserManager<ApplicationUser> _userManager;
+
         private readonly ApplicationDbContext _context;
+
 
         public SubscricoesController(ApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<IActionResult> EditarRole()
+        {
+            var user = await _context.Users.FirstOrDefaultAsync(e => e.Id == e.Id);
+
+            // Add that user to the admin role:
+            await _userManager.AddToRoleAsync(user, "Subscritor");
+            await _context.SaveChangesAsync();
+            return View(ViewBag);
         }
 
         // GET: Subscricoes

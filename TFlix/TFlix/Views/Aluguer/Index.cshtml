@@ -4,56 +4,107 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+@if (User.IsInRole("Administrador")){
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Filme)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Utilizador)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Preco)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataInicio)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DataFim)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Filme.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Utilizador.Id)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Preco)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataInicio)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DataFim)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-            </td>
-        </tr>
+    <h1>Lista de Aluguers</h1>
+
+    <p>
+        <a asp-action="Create">Criar nos aluguers</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Filme)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Utilizador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Preco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataFim)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+    @foreach (var item in Model) {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Filme.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Utilizador.Id)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Preco)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataInicio)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DataFim)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                </td>
+            </tr>
+    }
+        </tbody>
+    </table>
+}else if (User.IsInRole("Cliente")) { 
+
+    <h1>Aluguers</h1>
+
+     <div class="columns">
+      <ul class="price">
+        <li class="header">Pack 1</li>
+        <li class="grey">9,99€</li>
+        <li class="descr">2 Filmes</li>
+        <li class="descr">Qualidade: 1080p</li>
+        <li class="grey"><button class="button-34">Adere Aqui</button></li>
+      </ul>
+    </div> 
+
+      <div class="columns">
+      <ul class="price">
+        <li class="header">Pack 2</li>
+        <li class="grey">14,99€</li>
+        <li class="descr">4 Filmes</li>
+        <li class="descr">Qualidade: 1080p</li>
+        <li class="grey"><button class="button-34">Adere Aqui</button></li>
+      </ul>
+    </div>
+
+     <div class="columns">
+      <ul class="price">
+        <li class="header">Pack 3</li>
+        <li class="grey">19,99€</li>
+        <li class="descr">8 Filmes</li>
+        <li class="descr">Qualidade: 1080p</li>
+        <li class="grey"><button class="button-34">Adere Aqui</button></li>
+      </ul>
+    </div>
+
+}else{
+    
+    <h1>Cria conta para poderes ter acesso a todos os detalhes!!</h1>
+
+    <div>
+        <form class = "bt">
+        <img alt ="Slogan" src="~/logo (5).png" />
+        <br />
+        <button class="button-34" role="button" asp-area="Identity" asp-page="/Account/Register">Registo</button>
+        <br />
+        <button class="button-34" role="button" asp-area="Identity" asp-page="/Account/Login">Login</button>
+        </form>
+    </div> 
+
 }
-    </tbody>
-</table>

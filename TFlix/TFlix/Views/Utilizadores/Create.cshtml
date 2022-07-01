@@ -4,6 +4,7 @@
     ViewData["Title"] = "Criar";
 }
 
+@if (User.IsInRole("Administrador")){ 
 <h1>Criar</h1>
 
 <h4>Utilizador</h4>
@@ -73,3 +74,8 @@
     <a asp-action="Index">Voltar à lista</a>
 </div>
 
+}else{
+
+    <h1>Apenas os administradores têm acesso a esta informação</h1>
+
+}

@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<TFlix.Models.Filme>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Filmes";
 }
 
-<h1>Index</h1>
+<h1>Lista de Filmes</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create">Adicionar filme</a>
 </p>
 <table class="table">
     <thead>
@@ -44,15 +44,15 @@
             </td>
             <td>
                 @if (!string.IsNullOrEmpty(item.Imagem)) {
-                        <a href="~/@item.Imagem" target="_blank">
-                            <img src="~/@item.Imagem"
+                        <a href="~/Fotos/Filmes/@item.Imagem" target="_blank">
+                            <img src="~/Fotos/Filmes/@item.Imagem"
                          alt="Capa do filme: @Html.DisplayFor(modelItem => item.Titulo)"
                          title="@item.Titulo"
                          height="100" />
                         </a>
                     }
                     else {
-                        <img src="~/@item.Imagem"
+                        <img src="~/Fotos/Filmes/@item.Imagem"
                      alt="Capa do filme: @Html.DisplayFor(modelItem => item.Titulo)"
                      title="@item.Titulo"
                      height="100" />

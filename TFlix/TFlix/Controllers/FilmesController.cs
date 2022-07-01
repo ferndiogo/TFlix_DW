@@ -14,9 +14,13 @@ namespace TFlix.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public FilmesController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public FilmesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Filmes
@@ -54,12 +58,75 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero")] Filme filme)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero")] Filme filme, IFormFile novoFilme)
         {
+            if (novoFilme == null)
+            {
+                filme.Imagem = "semFoto.png";
+            }
+            else
+            {
+                if (!(novoFilme.ContentType == "image/jpeg" || novoFilme.ContentType == "image/png" || novoFilme.ContentType == "image/jpg"))
+                {
+                    // write the error message
+                    ModelState.AddModelError("", "Please, if you want to send a file, please choose an image...");
+                    // resend control to view, with data provided by user
+                    return View(filme);
+                }
+                else
+                {
+                    // define image name
+                    Guid g;
+                    g = Guid.NewGuid();
+                    string imageName = filme.Titulo + "_" + g.ToString();
+                    string extensionOfImage = Path.GetExtension(novoFilme.FileName).ToLower();
+                    imageName += extensionOfImage;
+                    // add image name to vet data
+                    filme.Imagem = imageName;
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(filme);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    // add vet data to database
+                    _context.Add(filme);
+                    // commit
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    // if the code arrives here, something wrong has appended
+                    // we must fix the error, or at least report it
+
+                    // add a model error to our code
+                    ModelState.AddModelError("", "Something went wrong. I can not store data on database");
+                    // eventually, before sending control to View
+                    // report error. For instance, write a message to the disc
+                    // or send an email to admin              
+
+                    // send control to View
+                    return View(filme);
+                }
+                // save image file to disk
+                // ********************************
+                if (novoFilme != null)
+                {
+                    // ask the server what address it wants to use
+                    string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//filmed");
+                    // see if the folder 'Photos' exists
+                    if (!Directory.Exists(newImageLocalization))
+                    {
+                        Directory.CreateDirectory(newImageLocalization);
+                    }
+                    // save image file to disk
+                    newImageLocalization = Path.Combine(newImageLocalization, filme.Imagem);
+                    using var stream = new FileStream(newImageLocalization, FileMode.Create);
+                    await novoFilme.CopyToAsync(stream);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(filme);

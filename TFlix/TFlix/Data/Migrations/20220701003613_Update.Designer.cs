@@ -12,8 +12,8 @@ using TFlix.Data;
 namespace TFlix.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220630151408_ChangeDataNasc")]
-    partial class ChangeDataNasc
+    [Migration("20220701003613_Update")]
+    partial class Update
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,16 +69,23 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "d96e006b-b811-40db-896c-fa1cbb1f2127",
+                            ConcurrencyStamp = "85b785b4-045a-48e0-9c1b-37c3241ddeff",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "dbb7679a-2651-48f1-b8da-c4b446227f0d",
+                            ConcurrencyStamp = "73d25faf-4c27-4c14-9285-1623313cc688",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
+                        },
+                        new
+                        {
+                            Id = "s",
+                            ConcurrencyStamp = "3cd290db-561c-4ee5-bcad-c5e288ec383e",
+                            Name = "Subscritor",
+                            NormalizedName = "SUBSCRITOR"
                         });
                 });
 
@@ -229,9 +236,6 @@ namespace TFlix.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("bit");
 
-                    b.Property<string>("Funcao")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<bool>("LockoutEnabled")
                         .HasColumnType("bit");
 
@@ -290,11 +294,13 @@ namespace TFlix.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<DateTime>("DataFim")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataFim")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
-                    b.Property<DateTime>("DataInicio")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataInicio")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("FilmeFK")
                         .HasColumnType("int");
@@ -325,27 +331,61 @@ namespace TFlix.Migrations
                     b.Property<int>("Classificacao")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataCriacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Elenco")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<string>("Genero")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Imagem")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sinopse")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<string>("Titulo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Filmes");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Classificacao = 83,
+                            DataCriacao = "5 de maio de 2022",
+                            Elenco = "Elizabeth Olsen, Benedict Cumberbatch",
+                            Genero = "Terror",
+                            Imagem = "DoctorStrange.jpeg",
+                            Sinopse = "O aguardado filme trata da jornada do Doutor Estranho rumo ao desconhecido.",
+                            Titulo = "Doctor Strange in the Multiverse of Madness"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Classificacao = 60,
+                            DataCriacao = "26 de maio de 2022",
+                            Elenco = "Elsa Pataky, Luke Bracey",
+                            Genero = "Ação",
+                            Imagem = "Interceptor.jpg",
+                            Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
+                            Titulo = "Interceptor"
+                        });
                 });
 
             modelBuilder.Entity("TFlix.Models.Serie", b =>
@@ -359,33 +399,71 @@ namespace TFlix.Migrations
                     b.Property<int>("Classificacao")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("DataCriacao")
-                        .HasColumnType("datetime2");
+                    b.Property<string>("DataCriacao")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Elenco")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
                     b.Property<int>("Episodio")
                         .HasColumnType("int");
 
                     b.Property<string>("Genero")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Imagem")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sinopse")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(500)
+                        .HasColumnType("nvarchar(500)");
 
                     b.Property<int>("Temporada")
                         .HasColumnType("int");
 
                     b.Property<string>("Titulo")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.HasKey("Id");
 
                     b.ToTable("Series");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Classificacao = 90,
+                            DataCriacao = "18 de Setembro de 2020",
+                            Elenco = "Sarah Paulson, Finn Wittrock",
+                            Episodio = 8,
+                            Genero = "Drama",
+                            Imagem = "Ratched.jpeg",
+                            Sinopse = "Mildred Ratched começa a trabalhar como enfermeira em um hospital psiquiátrico.",
+                            Temporada = 1,
+                            Titulo = "Ratched"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Classificacao = 96,
+                            DataCriacao = "15 de julho de 2016",
+                            Elenco = "Millie Bobby Brown, Finn Wolfhard",
+                            Episodio = 32,
+                            Genero = "Terror",
+                            Imagem = "StrangerThings.jpg",
+                            Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
+                            Temporada = 4,
+                            Titulo = "Stranger Things"
+                        });
                 });
 
             modelBuilder.Entity("TFlix.Models.Subscricao", b =>
@@ -427,30 +505,38 @@ namespace TFlix.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
                     b.Property<string>("CodPostal")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("DataNasc")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("DataNasc")
+                        .HasColumnType("datetime2");
 
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Funcao")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<string>("Morada")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("NIF")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(9)
+                        .HasColumnType("nvarchar(9)");
 
                     b.Property<string>("Nome")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasMaxLength(30)
+                        .HasColumnType("nvarchar(30)");
 
                     b.Property<string>("Pais")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Sexo")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserF")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("UserID")
