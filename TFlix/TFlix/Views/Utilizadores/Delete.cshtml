@@ -4,6 +4,8 @@
     ViewData["Title"] = "Apagar";
 }
 
+@if (User.IsInRole("Administrador")){ 
+
 <h1>Apagar</h1>
 
 <h3>Tem a certeza que deseja eliminar?</h3>
@@ -79,3 +81,9 @@
         <a asp-action="Index">Voltar à lista</a>
     </form>
 </div>
+
+}else{
+
+    <h1>Apenas os administradores têm acesso a esta informação</h1>
+
+}

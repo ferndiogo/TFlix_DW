@@ -158,16 +158,6 @@ namespace TFlix.Areas.Identity.Pages.Account
                     // all users registed by this way are 'Clients'
                     await _userManager.AddToRoleAsync(user, "Cliente");
 
-                    bool cliente = User.IsInRole("Cliente");
-
-                    if (cliente)
-                    {
-                        Input.Utilizador.UserF =  "Cliente";
-                    }
-                    else {
-                        Input.Utilizador.UserF = "Administrador";
-                    }
-
 
                     // **********************************************************
                     // save the owner's data
@@ -251,5 +241,13 @@ namespace TFlix.Areas.Identity.Pages.Account
             }
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
+
+        public async Task<IActionResult> MudarRole()
+        {
+            var user = CreateUser();
+            return (IActionResult)await _userManager.AddToRoleAsync(user, "Cliente");
+        }
     }
-}
+
+    
+    }

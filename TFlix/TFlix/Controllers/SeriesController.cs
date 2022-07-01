@@ -14,9 +14,12 @@ namespace TFlix.Controllers
     {
         private readonly ApplicationDbContext _context;
 
-        public SeriesController(ApplicationDbContext context)
+        private readonly IWebHostEnvironment _webHostEnvironment;
+
+        public SeriesController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // GET: Series
@@ -54,12 +57,77 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero,Temporada,Episodio")] Serie serie)
+        public async Task<IActionResult> Create([Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero,Temporada,Episodio")] Serie serie, IFormFile novaSerie)
         {
+
+
+            if (novaSerie == null)
+            {
+                serie.Imagem = "semFoto.png";
+            }
+            else
+            {
+                if (!(novaSerie.ContentType == "image/jpeg" || novaSerie.ContentType == "image/png" || novaSerie.ContentType == "image/jpg"))
+                {
+                    // write the error message
+                    ModelState.AddModelError("", "Please, if you want to send a file, please choose an image...");
+                    // resend control to view, with data provided by user
+                    return View(serie);
+                }
+                else
+                {
+                    // define image name
+                    Guid g;
+                    g = Guid.NewGuid();
+                    string imageName = serie.Titulo + "_" + g.ToString();
+                    string extensionOfImage = Path.GetExtension(novaSerie.FileName).ToLower();
+                    imageName += extensionOfImage;
+                    // add image name to vet data
+                    serie.Imagem = imageName;
+                }
+            }
+
             if (ModelState.IsValid)
             {
-                _context.Add(serie);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    // add vet data to database
+                    _context.Add(serie);
+                    // commit
+                    await _context.SaveChangesAsync();
+                }
+                catch (Exception)
+                {
+                    // if the code arrives here, something wrong has appended
+                    // we must fix the error, or at least report it
+
+                    // add a model error to our code
+                    ModelState.AddModelError("", "Something went wrong. I can not store data on database");
+                    // eventually, before sending control to View
+                    // report error. For instance, write a message to the disc
+                    // or send an email to admin              
+
+                    // send control to View
+                    return View(serie);
+                }
+                // save image file to disk
+                // ********************************
+                if (novaSerie != null)
+                {
+                    // ask the server what address it wants to use
+                    string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Series");
+                    // see if the folder 'Photos' exists
+                    if (!Directory.Exists(newImageLocalization))
+                    {
+                        Directory.CreateDirectory(newImageLocalization);
+                    }
+                    // save image file to disk
+                    newImageLocalization = Path.Combine(newImageLocalization, serie.Imagem);
+                    using var stream = new FileStream(newImageLocalization, FileMode.Create);
+                    await novaSerie.CopyToAsync(stream);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(serie);
