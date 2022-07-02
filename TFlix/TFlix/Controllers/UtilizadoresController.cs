@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
 using TFlix.Models;
 
 namespace TFlix.Controllers
 {
+
+    [Authorize(Roles = "Administrador")]
     public class UtilizadoresController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -22,7 +20,7 @@ namespace TFlix.Controllers
         // GET: Utilizadores
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Utilizadores.ToListAsync());
+            return View(await _context.Utilizadores.ToListAsync());
         }
 
         // GET: Utilizadores/Details/5
@@ -148,14 +146,14 @@ namespace TFlix.Controllers
             {
                 _context.Utilizadores.Remove(utilizador);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool UtilizadorExists(int id)
         {
-          return _context.Utilizadores.Any(e => e.Id == id);
+            return _context.Utilizadores.Any(e => e.Id == id);
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace TFlix.Models
 {
@@ -8,7 +7,8 @@ namespace TFlix.Models
     /// </summary>
     public class Filme
     {
-        public Filme() {
+        public Filme()
+        {
 
             Aluguer = new HashSet<Aluga>();
 

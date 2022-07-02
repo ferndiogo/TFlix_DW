@@ -137,7 +137,7 @@ namespace TFlix.Areas.Identity.Pages.Account
                 // add Name and RegistrationDate to the 'user
                 user.Nome = Input.Utilizador.Nome;
                 user.DataRegisto = DateTime.Now;
-                
+
 
                 //if (cliente)
                 //{
@@ -159,9 +159,9 @@ namespace TFlix.Areas.Identity.Pages.Account
                     await _userManager.AddToRoleAsync(user, "Cliente");
 
 
-                    
-                    user.Funcao  = "Cliente";
-                    
+
+                    user.Funcao = "Cliente";
+
 
                     // **********************************************************
                     // save the owner's data
@@ -247,12 +247,7 @@ namespace TFlix.Areas.Identity.Pages.Account
             return (IUserEmailStore<ApplicationUser>)_userStore;
         }
 
-        public async Task<IActionResult> MudarRole()
-        {
-            var user = CreateUser();
-            return (IActionResult)await _userManager.AddToRoleAsync(user, "Cliente");
-        }
     }
 
-    
-    }
+
+}

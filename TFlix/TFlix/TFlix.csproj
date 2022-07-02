@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\favicon.png" />
     <Content Remove="wwwroot\Fotos\Series\dfgdf_0355e0b1-4b54-440b-b080-6273b445a3cf.jpeg" />
     <Content Remove="wwwroot\Fotos\Series\dfgdf_4033e747-3e3b-4a57-a662-fe05ab74bc89.jpeg" />
     <Content Remove="wwwroot\Fotos\Series\dfgdf_9de27b93-c293-40ea-a72d-bb8519617f11.jpeg" />

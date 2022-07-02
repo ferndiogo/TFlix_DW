@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -20,7 +21,8 @@ builder.Services.AddDefaultIdentity<ApplicationUser>(  // builder.Services.AddDe
 
 /* access to session vars'  */
 builder.Services.AddDistributedMemoryCache();
-builder.Services.AddSession(options => {
+builder.Services.AddSession(options =>
+{
     options.IdleTimeout = TimeSpan.FromSeconds(120);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
@@ -29,7 +31,8 @@ builder.Services.AddSession(options => {
 
 /*  specify authentication configuration  */
 // https://docs.microsoft.com/en-us/aspnet/core/security/authentication/identity-configuration?view=aspnetcore-6.0&tabs=aspnetcore2x&viewFallbackFrom=aspnetcore-2.1
-builder.Services.Configure<IdentityOptions>(options => {
+builder.Services.Configure<IdentityOptions>(options =>
+{
     // Default Lockout settings.
     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
     options.Lockout.MaxFailedAccessAttempts = 5;
@@ -48,7 +51,8 @@ builder.Services.Configure<IdentityOptions>(options => {
 });
 
 /*  define how cookies work  */
-builder.Services.ConfigureApplicationCookie(options => {
+builder.Services.ConfigureApplicationCookie(options =>
+{
     options.AccessDeniedPath = "/Identity/Account/AccessDenied";
     options.Cookie.Name = "YourAppCookieName";
     options.Cookie.HttpOnly = true;

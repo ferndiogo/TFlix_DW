@@ -4,7 +4,6 @@
     ViewData["Title"] = "Detalhes";
 }
 
-@if (User.IsInRole("Administrador")){ 
 <h1>Detalhes</h1>
 
 <div>
@@ -78,8 +77,3 @@
     <a asp-action="Index">Voltar à lista</a>
 </div>
 
-}else{
-
-    <h1>Apenas os administradores têm acesso a esta informação</h1>
-
-}

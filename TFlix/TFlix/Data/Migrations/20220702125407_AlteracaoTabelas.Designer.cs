@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TFlix.Data;
 
@@ -11,9 +12,10 @@ using TFlix.Data;
 namespace TFlix.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220702125407_AlteracaoTabelas")]
+    partial class AlteracaoTabelas
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -67,30 +69,23 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "be32b1ee-4d74-4655-b738-5c7148cc9354",
+                            ConcurrencyStamp = "944eca38-03ee-4782-ba19-4a3e38598933",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "59d4a618-6f7d-4f34-983c-46f0aa1d5ae3",
+                            ConcurrencyStamp = "e8ae9ad0-93dc-474d-8e36-07fb0f3a7416",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "s",
-                            ConcurrencyStamp = "b06e60e8-cbbd-4781-a92b-c6490d60e8cf",
+                            ConcurrencyStamp = "a6963fa2-6d83-4cc7-b4cf-34b4b523aefb",
                             Name = "Subscritor",
                             NormalizedName = "SUBSCRITOR"
-                        },
-                        new
-                        {
-                            Id = "al",
-                            ConcurrencyStamp = "7f96c8e9-64da-4b81-b0d0-f2cf6143158a",
-                            Name = "Alugueres",
-                            NormalizedName = "ALUGUERS"
                         });
                 });
 

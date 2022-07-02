@@ -40,7 +40,7 @@ namespace TFlix.Models
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
         [Display(Name = "Preço")]
         [RegularExpression("4.99|8.99|80", ErrorMessage = "O {0} só pode ser. 4.99, 8.99 ou 80 correspondente ás diferentes subscrições.")]
-        public double Preco { get; set; }
+        public decimal Preco { get; set; }
 
 
         /// <summary>
