@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
 using TFlix.Models;
@@ -22,12 +18,14 @@ namespace TFlix.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [Authorize(Roles = "Administrador, Subscritor, Alugueres")]
         // GET: Series
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Series.ToListAsync());
+            return View(await _context.Series.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrador, Subscritor, Alugueres")]
         // GET: Series/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,12 +44,14 @@ namespace TFlix.Controllers
             return View(serie);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Series/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Series/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -69,20 +69,20 @@ namespace TFlix.Controllers
             {
                 if (!(novaSerie.ContentType == "image/jpeg" || novaSerie.ContentType == "image/png" || novaSerie.ContentType == "image/jpg"))
                 {
-                    // write the error message
-                    ModelState.AddModelError("", "Please, if you want to send a file, please choose an image...");
-                    // resend control to view, with data provided by user
+                    // menssagem de erro
+                    ModelState.AddModelError("", "Por favor, se pretende enviar um ficheiro, escolha uma imagem suportada.");
+                    // reenvia o control para a view, com os dados do utilizador
                     return View(serie);
                 }
                 else
                 {
-                    // define image name
+                    // definir o nome da imagem
                     Guid g;
                     g = Guid.NewGuid();
                     string imageName = serie.Titulo + "_" + g.ToString();
                     string extensionOfImage = Path.GetExtension(novaSerie.FileName).ToLower();
                     imageName += extensionOfImage;
-                    // add image name to vet data
+                    // adicionar o nome da imagem aos filmes
                     serie.Imagem = imageName;
                 }
             }
@@ -91,38 +91,29 @@ namespace TFlix.Controllers
             {
                 try
                 {
-                    // add vet data to database
+                    // adiciona os dados do filme à base de dados
                     _context.Add(serie);
                     // commit
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception)
                 {
-                    // if the code arrives here, something wrong has appended
-                    // we must fix the error, or at least report it
-
-                    // add a model error to our code
                     ModelState.AddModelError("", "Something went wrong. I can not store data on database");
-                    // eventually, before sending control to View
-                    // report error. For instance, write a message to the disc
-                    // or send an email to admin              
 
-                    // send control to View
                     return View(serie);
                 }
-                // save image file to disk
-                // ********************************
+                // guardar a imagem no disco
                 if (novaSerie != null)
                 {
-                    // ask the server what address it wants to use
+                    // pergunta ao servidor que endereço quer usar
                     string addressToStoreFile = _webHostEnvironment.WebRootPath;
                     string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Series");
-                    // see if the folder 'Photos' exists
+                    // ver se a diretoria existe se não cria
                     if (!Directory.Exists(newImageLocalization))
                     {
                         Directory.CreateDirectory(newImageLocalization);
                     }
-                    // save image file to disk
+                    //guarda a imagem no disco
                     newImageLocalization = Path.Combine(newImageLocalization, serie.Imagem);
                     using var stream = new FileStream(newImageLocalization, FileMode.Create);
                     await novaSerie.CopyToAsync(stream);
@@ -133,33 +124,88 @@ namespace TFlix.Controllers
             return View(serie);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Series/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Series == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var serie = await _context.Series.FindAsync(id);
             if (serie == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
+
+            // guarda o ID da serie e o nome da imagem para assegurar que não há alterações no browser...
+            HttpContext.Session.SetInt32("serieID", serie.Id);
+
+            HttpContext.Session.SetString("serieImg", serie.Imagem);
+
+            // envio dos dados para a View
             return View(serie);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Series/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero,Temporada,Episodio")] Serie serie)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero,Temporada,Episodio")] Serie serie, IFormFile novaSerie)
         {
             if (id != serie.Id)
             {
                 return NotFound();
             }
+
+            var seriesIDGuardado = HttpContext.Session.GetInt32("serieID");
+            var seriesImgGuardada = HttpContext.Session.GetString("serieImg");
+
+            if (seriesIDGuardado == null)
+            {
+
+                ModelState.AddModelError("", "Gastou mais tempo que o esperado...");
+                return View(serie);
+
+            }
+
+            if (seriesIDGuardado != serie.Id)
+            {
+                ModelState.AddModelError("", "Algo deu errado.");
+                return RedirectToAction("Index");
+            }
+
+
+            if (seriesImgGuardada != "semFoto.png")
+            {
+                System.IO.File.Delete("wwwroot//Fotos//Series//" + Path.Combine(seriesImgGuardada));
+            }
+
+
+            if (!(novaSerie.ContentType == "image/jpeg" || novaSerie.ContentType == "image/png" || novaSerie.ContentType == "image/jpg"))
+            {
+                // menssagem de erro
+                ModelState.AddModelError("", "Por favor, se pretende enviar um ficheiro, escolha uma imagem suportada.");
+                // reenvia o control para a view, com os dados do utilizador
+                return View(serie);
+            }
+            else
+            {
+                // define o nome da imagem
+                Guid g;
+                g = Guid.NewGuid();
+                string imageName = serie.Titulo + "_" + g.ToString();
+                string extensionOfImage = Path.GetExtension(novaSerie.FileName).ToLower();
+                imageName += extensionOfImage;
+                // adiciona o nome da imagem aos dados da serie
+                serie.Imagem = imageName;
+            }
+
+
+
 
             if (ModelState.IsValid)
             {
@@ -170,7 +216,7 @@ namespace TFlix.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SerieExists(serie.Id))
+                    if (!serieExiste(serie.Id))
                     {
                         return NotFound();
                     }
@@ -179,11 +225,30 @@ namespace TFlix.Controllers
                         throw;
                     }
                 }
+
+                if (novaSerie != null)
+                {
+                    // pergunta ao servidor que endereço quer usar
+                    string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Series");
+                    // verifica se a ditoria existe se não cria
+                    if (!Directory.Exists(newImageLocalization))
+                    {
+                        Directory.CreateDirectory(newImageLocalization);
+                    }
+                    // guarda a imagem no disco
+                    newImageLocalization = Path.Combine(newImageLocalization, serie.Imagem);
+                    using var stream = new FileStream(newImageLocalization, FileMode.Create);
+                    await novaSerie.CopyToAsync(stream);
+                }
+
+
                 return RedirectToAction(nameof(Index));
             }
             return View(serie);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Series/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -199,31 +264,46 @@ namespace TFlix.Controllers
                 return NotFound();
             }
 
+            HttpContext.Session.SetString("serieImg", serie.Imagem);
+
             return View(serie);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Series/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+        public async Task<IActionResult> DeleteConfirmed(int id, Serie serie)
         {
-            if (_context.Series == null)
+            var serie1 = await _context.Series.FindAsync(id);
+
+            var seriesImgGuardada = HttpContext.Session.GetString("serieImg");
+
+            try
             {
-                return Problem("Entity set 'ApplicationDbContext.Series'  is null.");
+                _context.Series.Remove(serie1);
+                await _context.SaveChangesAsync();
+
+                // apaga a imagem caso não seja a imagem default do disco ao eliminar uma série
+                if (seriesImgGuardada != "semFoto.png")
+                {
+                    System.IO.File.Delete("wwwroot//Fotos//Series//" + Path.Combine(seriesImgGuardada));
+                }
+
             }
-            var serie = await _context.Series.FindAsync(id);
-            if (serie != null)
+            catch (Exception)
             {
-                _context.Series.Remove(serie);
+                ModelState.AddModelError("", "Algo deu errado ao apagar a foto.");
+                return RedirectToAction("Index");
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
+
         }
 
-        private bool SerieExists(int id)
+        private bool serieExiste(int id)
         {
-          return _context.Series.Any(e => e.Id == id);
+            return _context.Series.Any(e => e.Id == id);
         }
     }
 }

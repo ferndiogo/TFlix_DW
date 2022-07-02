@@ -7,7 +7,8 @@ namespace TFlix.Models
     /// </summary>
     public class Utilizador
     {
-        public Utilizador() {
+        public Utilizador()
+        {
 
             Subscricoes = new HashSet<Subscricao>();
 
@@ -81,7 +82,7 @@ namespace TFlix.Models
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
         [Display(Name = "Data de Nascimento")]
-         public DateTime DataNasc { get; set; }
+        public DateTime DataNasc { get; set; }
 
         /// <summary>
         /// Define os utilizadores subscritos
@@ -102,6 +103,6 @@ namespace TFlix.Models
         /// FK usada para conectar 'business data' à 'authetication DB'
         /// </summary>
         public string UserF { get; set; }
-        
+
     }
 }

@@ -4,12 +4,11 @@
     ViewData["Title"] = "Lista de Utilizadores";
 }
 
-@if (User.IsInRole("Administrador")){ 
-    <h1>Lista de utilizadores</h1>
+<h1>Lista de utilizadores</h1>
 
-    <p>
-        <a asp-action="Create">Criar novo utilizador</a>
-    </p>
+<p>
+    <a asp-action="Create">Criar novo utilizador</a>
+</p>
     <table class="table">
         <thead>
             <tr>
@@ -88,8 +87,3 @@
     }
         </tbody>
     </table>
-}else{
-
-    <h1>Apenas os administradores têm acesso a esta informação</h1>
-
-}

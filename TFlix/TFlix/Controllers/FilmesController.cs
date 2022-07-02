@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
 using TFlix.Models;
@@ -23,12 +19,14 @@ namespace TFlix.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
+        [Authorize(Roles = "Administrador, Subscritor, Alugueres")]
         // GET: Filmes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.Filmes.ToListAsync());
+            return View(await _context.Filmes.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrador, Alugueres")]
         // GET: Filmes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -47,12 +45,14 @@ namespace TFlix.Controllers
             return View(filme);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Filmes/Create
         public IActionResult Create()
         {
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Filmes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -68,20 +68,20 @@ namespace TFlix.Controllers
             {
                 if (!(novoFilme.ContentType == "image/jpeg" || novoFilme.ContentType == "image/png" || novoFilme.ContentType == "image/jpg"))
                 {
-                    // write the error message
-                    ModelState.AddModelError("", "Please, if you want to send a file, please choose an image...");
-                    // resend control to view, with data provided by user
+                    // menssagem de erro
+                    ModelState.AddModelError("", "Por favor, se pretende enviar um ficheiro, escolha uma imagem suportada.");
+                    // reenvia o control para a view, com os dados do utilizador
                     return View(filme);
                 }
                 else
                 {
-                    // define image name
+                    // definir o nome da imagem
                     Guid g;
                     g = Guid.NewGuid();
                     string imageName = filme.Titulo + "_" + g.ToString();
                     string extensionOfImage = Path.GetExtension(novoFilme.FileName).ToLower();
                     imageName += extensionOfImage;
-                    // add image name to vet data
+                    // adicionar o nome da imagem aos filmes
                     filme.Imagem = imageName;
                 }
             }
@@ -90,38 +90,30 @@ namespace TFlix.Controllers
             {
                 try
                 {
-                    // add vet data to database
+                    // adiciona os dados do filme à base de dados
                     _context.Add(filme);
                     // commit
                     await _context.SaveChangesAsync();
                 }
                 catch (Exception)
                 {
-                    // if the code arrives here, something wrong has appended
-                    // we must fix the error, or at least report it
-
-                    // add a model error to our code
-                    ModelState.AddModelError("", "Something went wrong. I can not store data on database");
-                    // eventually, before sending control to View
-                    // report error. For instance, write a message to the disc
-                    // or send an email to admin              
-
-                    // send control to View
+                    
+                    ModelState.AddModelError("", "Algo deu errado.");
+                    
                     return View(filme);
                 }
-                // save image file to disk
-                // ********************************
+                // guardar a imagem no disco
                 if (novoFilme != null)
                 {
-                    // ask the server what address it wants to use
+                    // pergunta ao servidor que endereço quer usar
                     string addressToStoreFile = _webHostEnvironment.WebRootPath;
-                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//filmed");
-                    // see if the folder 'Photos' exists
+                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Filmes");
+                    // ver se a diretoria existe se não cria
                     if (!Directory.Exists(newImageLocalization))
                     {
                         Directory.CreateDirectory(newImageLocalization);
                     }
-                    // save image file to disk
+                    //guarda a imagem no disco
                     newImageLocalization = Path.Combine(newImageLocalization, filme.Imagem);
                     using var stream = new FileStream(newImageLocalization, FileMode.Create);
                     await novoFilme.CopyToAsync(stream);
@@ -132,33 +124,86 @@ namespace TFlix.Controllers
             return View(filme);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Filmes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null || _context.Filmes == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
 
             var filme = await _context.Filmes.FindAsync(id);
             if (filme == null)
             {
-                return NotFound();
+                return RedirectToAction("Index");
             }
+
+            
+            // guarda o ID do filme e o nome da imagem para assegurar que não há alterações no browser...
+            HttpContext.Session.SetInt32("filmeD", filme.Id);
+
+            HttpContext.Session.SetString("filmeImg", filme.Imagem);
+
+            // envio dos dados para a View
             return View(filme);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Filmes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero")] Filme filme)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Titulo,Imagem,Sinopse,DataCriacao,Classificacao,Elenco,Genero")] Filme filme, IFormFile novoFilme)
         {
             if (id != filme.Id)
             {
                 return NotFound();
             }
+
+            var filmeIDGuardado = HttpContext.Session.GetInt32("filmeD");
+            var filmeImgGuardada = HttpContext.Session.GetString("filmeImg");
+
+            if (filmeIDGuardado == null)
+            {
+
+                ModelState.AddModelError("", "Gastou mais tempo que o esperado...");
+                return View(filme);
+            }
+
+            if (filmeIDGuardado != filme.Id)
+            {
+                ModelState.AddModelError("", "Algo deu errado.");
+                return RedirectToAction("Index");
+            }
+
+            if (filmeImgGuardada != "semFoto.png")
+            {
+                System.IO.File.Delete("wwwroot//Fotos//Filmes//" + Path.Combine(filmeImgGuardada));
+            }
+
+
+            if (!(novoFilme.ContentType == "image/jpeg" || novoFilme.ContentType == "image/png" || novoFilme.ContentType == "image/jpg"))
+            {
+                // menssagem de erro
+                ModelState.AddModelError("", "Por favor, se pretende enviar um ficheiro, escolha uma imagem suportada.");
+                // reenvia o control para a view, com os dados do utilizador
+                return View(filme);
+            }
+            else
+            {
+                // define o nome da imagem
+                Guid g;
+                g = Guid.NewGuid();
+                string imageName = filme.Titulo + "_" + g.ToString();
+                string extensionOfImage = Path.GetExtension(novoFilme.FileName).ToLower();
+                imageName += extensionOfImage;
+                // adiciona o nome da imagem aos dados do filme
+                filme.Imagem = imageName;
+            }
+
+
 
             if (ModelState.IsValid)
             {
@@ -169,7 +214,7 @@ namespace TFlix.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!FilmeExists(filme.Id))
+                    if (!FilmeExiste(filme.Id))
                     {
                         return NotFound();
                     }
@@ -178,11 +223,29 @@ namespace TFlix.Controllers
                         throw;
                     }
                 }
+
+                if (novoFilme != null)
+                {
+                    // pergunta ao servidor que endereço quer usar
+                    string addressToStoreFile = _webHostEnvironment.WebRootPath;
+                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Filmes");
+                    // verifica se a ditoria existe se não cria
+                    if (!Directory.Exists(newImageLocalization))
+                    {
+                        Directory.CreateDirectory(newImageLocalization);
+                    }
+                    // guarda a imagem no disco
+                    newImageLocalization = Path.Combine(newImageLocalization, filme.Imagem);
+                    using var stream = new FileStream(newImageLocalization, FileMode.Create);
+                    await novoFilme.CopyToAsync(stream);
+                }
+
                 return RedirectToAction(nameof(Index));
             }
             return View(filme);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Filmes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -198,31 +261,44 @@ namespace TFlix.Controllers
                 return NotFound();
             }
 
+            HttpContext.Session.SetString("filmeImg", filme.Imagem);
+
             return View(filme);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Filmes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Filmes == null)
+            var filme1 = await _context.Filmes.FindAsync(id);
+
+            var filmeImgGuardada = HttpContext.Session.GetString("filmeImg");
+
+            try
             {
-                return Problem("Entity set 'ApplicationDbContext.Filmes'  is null.");
+                _context.Filmes.Remove(filme1);
+                await _context.SaveChangesAsync();
+                // apaga a imagem caso não seja a imagem default do disco ao eliminar um filme
+                if (filmeImgGuardada != "semFoto.png")
+                {
+                    System.IO.File.Delete("wwwroot//Fotos//Filmes//" + Path.Combine(filmeImgGuardada));
+                }
+
             }
-            var filme = await _context.Filmes.FindAsync(id);
-            if (filme != null)
+            catch (Exception)
             {
-                _context.Filmes.Remove(filme);
+                ModelState.AddModelError("", "Algo deu errado ao apagar a foto.");
+                return RedirectToAction("Index");
             }
-            
-            await _context.SaveChangesAsync();
+
             return RedirectToAction(nameof(Index));
         }
 
-        private bool FilmeExists(int id)
+        private bool FilmeExiste(int id)
         {
-          return _context.Filmes.Any(e => e.Id == id);
+            return _context.Filmes.Any(e => e.Id == id);
         }
     }
 }

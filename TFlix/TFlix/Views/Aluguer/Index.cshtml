@@ -1,15 +1,15 @@
 ﻿@model IEnumerable<TFlix.Models.Aluga>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Lista de Alugueres";
 }
 
 @if (User.IsInRole("Administrador")){
 
-    <h1>Lista de Aluguers</h1>
+    <h1>Lista de Alugueres</h1>
 
     <p>
-        <a asp-action="Create">Criar nos aluguers</a>
+        <a asp-action="Create">Criar alugueres</a>
     </p>
     <table class="table">
         <thead>
@@ -61,7 +61,7 @@
     </table>
 }else if (User.IsInRole("Cliente")) { 
 
-    <h1>Aluguers</h1>
+    <h1>Alugueres</h1>
 
      <div class="columns">
       <ul class="price">
@@ -69,7 +69,8 @@
         <li class="grey">9,99€</li>
         <li class="descr">2 Filmes</li>
         <li class="descr">Qualidade: 1080p</li>
-        <li class="grey"><button class="button-34">Adere Aqui</button></li>
+        <li class="grey"><a class="button-34" asp-action="AlterarRole">Aluga Aqui</a>
+            </li>
       </ul>
     </div> 
 
@@ -79,7 +80,7 @@
         <li class="grey">14,99€</li>
         <li class="descr">4 Filmes</li>
         <li class="descr">Qualidade: 1080p</li>
-        <li class="grey"><button class="button-34">Adere Aqui</button></li>
+        <li class="grey"><a class="button-34" asp-action="AlterarRole">Aluga Aqui</a></li>
       </ul>
     </div>
 
@@ -89,22 +90,10 @@
         <li class="grey">19,99€</li>
         <li class="descr">8 Filmes</li>
         <li class="descr">Qualidade: 1080p</li>
-        <li class="grey"><button class="button-34">Adere Aqui</button></li>
+        <li class="grey"><a class="button-34" asp-action="AlterarRole">Aluga Aqui</a></li>
       </ul>
     </div>
 
-}else{
-    
-    <h1>Cria conta para poderes ter acesso a todos os detalhes!!</h1>
-
-    <div>
-        <form class = "bt">
-        <img alt ="Slogan" src="~/logo (5).png" />
-        <br />
-        <button class="button-34" role="button" asp-area="Identity" asp-page="/Account/Register">Registo</button>
-        <br />
-        <button class="button-34" role="button" asp-area="Identity" asp-page="/Account/Login">Login</button>
-        </form>
-    </div> 
+    <h3>Por favor faça Logout depois de escolher o pack para ter acesso ás suas série e filmes.</h3>
 
 }

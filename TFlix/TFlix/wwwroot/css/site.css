@@ -115,14 +115,12 @@ td, th {
     box-sizing: border-box;
 }
 
-/* Create three columns of equal width */
 .columns {
     float: left;
     width: 33.3%;
     padding: 8px;
 }
 
-/* Style the list */
 .price {
     list-style-type: none;
     border: 1px solid #eee;
@@ -132,39 +130,35 @@ td, th {
     transition: 0.3s;
 }
 
-/* Pricing header */
-    .price .header {
-        background-color: #111;
-        color: white;
-        font-size: 25px;
-    }
 
-    /* List items */
-    .price li {
-        border-bottom: 1px solid #eee;
-        padding: 20px;
-        text-align: center;
-    }
-
-    /* Grey list item */
-    .price .grey {
-        background-color: #eee;
-        font-size: 20px;
-    }
-
-    /* Grey list item */
-    .price .descr {
-        background-color: #6610f2;
-        font-size: 20px;
-        color: #ffffff;
-    }
-
-
-/* Change the width of the three columns to 100%
-(to stack horizontally on small screens) */
-@media only screen and (max-width: 600px) {
-    .columns {
-        width: 100%;
-    }
+.price .header {
+    background-color: #111;
+    color: white;
+    font-size: 25px;
 }
 
+.price li {
+    border-bottom: 1px solid #eee;
+    padding: 20px;
+    text-align: center;
+}
+
+.price .grey {
+    background-color: #eee;
+    font-size: 20px;
+}
+
+.price .descr {
+    background-color: #6610f2;
+    font-size: 20px;
+    color: #ffffff;
+}
+
+
+p {
+    text-align:center;
+}
+
+.sobre {
+    color:#ffffff;
+}

@@ -25,7 +25,7 @@ namespace TFlix.Data
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime DataRegisto { get; set; }
-
+        public string Funcao { get; set; }
     }
 
 
@@ -49,7 +49,8 @@ namespace TFlix.Data
             modelBuilder.Entity<IdentityRole>().HasData(
               new IdentityRole { Id = "a", Name = "Administrador", NormalizedName = "ADMINISTRADOR" },
               new IdentityRole { Id = "c", Name = "Cliente", NormalizedName = "CLIENTE" },
-              new IdentityRole { Id = "s", Name = "Subscritor", NormalizedName = "SUBSCRITOR" }
+              new IdentityRole { Id = "s", Name = "Subscritor", NormalizedName = "SUBSCRITOR" },
+              new IdentityRole { Id = "al", Name = "Alugueres", NormalizedName = "ALUGUERES" }
               );
 
             modelBuilder.Entity<Serie>().HasData(
@@ -60,11 +61,12 @@ namespace TFlix.Data
                 Imagem = "Ratched.jpeg",
                 Sinopse = "Mildred Ratched começa a trabalhar como enfermeira em um hospital psiquiátrico.",
                 DataCriacao = "18 de Setembro de 2020",
-                Classificacao = 90,
+                Classificacao = 4,
                 Elenco = "Sarah Paulson, Finn Wittrock",
                 Genero = "Drama",
                 Temporada = 1,
-                Episodio = 8 },
+                Episodio = 8
+            },
             new Serie
             {
                 Id = 2,
@@ -72,7 +74,7 @@ namespace TFlix.Data
                 Imagem = "StrangerThings.jpg",
                 Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
                 DataCriacao = "15 de julho de 2016",
-                Classificacao = 96,
+                Classificacao = 4,
                 Elenco = "Millie Bobby Brown, Finn Wolfhard",
                 Genero = "Terror",
                 Temporada = 4,
@@ -88,7 +90,7 @@ namespace TFlix.Data
                 Imagem = "DoctorStrange.jpeg",
                 Sinopse = "O aguardado filme trata da jornada do Doutor Estranho rumo ao desconhecido.",
                 DataCriacao = "5 de maio de 2022",
-                Classificacao = 83,
+                Classificacao = 4,
                 Elenco = "Elizabeth Olsen, Benedict Cumberbatch",
                 Genero = "Terror",
             },
@@ -99,7 +101,7 @@ namespace TFlix.Data
                 Imagem = "Interceptor.jpg",
                 Sinopse = "Um grupo de amigos se envolve em uma série de eventos sobrenaturais na pacata cidade de Hawkins.",
                 DataCriacao = "26 de maio de 2022",
-                Classificacao = 60,
+                Classificacao = 3,
                 Elenco = "Elsa Pataky, Luke Bracey",
                 Genero = "Ação",
             }

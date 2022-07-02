@@ -1,8 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
@@ -12,10 +11,16 @@ namespace TFlix.Controllers
 {
     public class AluguerController : Controller
     {
+        /// <summary>
+        /// Este atributo referencia a base de dados do projeto
+        /// </summary>
         private readonly ApplicationDbContext _context;
 
-        public AluguerController(ApplicationDbContext context)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public AluguerController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
         }
 
@@ -26,6 +31,7 @@ namespace TFlix.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Aluguer/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -46,6 +52,7 @@ namespace TFlix.Controllers
             return View(aluga);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Aluguer/Create
         public IActionResult Create()
         {
@@ -54,6 +61,7 @@ namespace TFlix.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Aluguer/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -72,6 +80,7 @@ namespace TFlix.Controllers
             return View(aluga);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Aluguer/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -90,6 +99,7 @@ namespace TFlix.Controllers
             return View(aluga);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Aluguer/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -127,6 +137,7 @@ namespace TFlix.Controllers
             return View(aluga);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Aluguer/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -147,6 +158,7 @@ namespace TFlix.Controllers
             return View(aluga);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Aluguer/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -161,14 +173,25 @@ namespace TFlix.Controllers
             {
                 _context.Aluguers.Remove(aluga);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool AlugaExists(int id)
         {
-          return _context.Aluguers.Any(e => e.Id == id);
+            return _context.Aluguers.Any(e => e.Id == id);
         }
+
+        public async Task<IActionResult> AlterarRole()
+        {
+            var userData = await _userManager.GetUserAsync(User);
+            await _userManager.RemoveFromRoleAsync(@userData, "Cliente");
+            await _userManager.AddToRoleAsync(@userData, "Alugueres");
+            return RedirectToAction(nameof(Index));
+
+        }
+
+        
     }
 }

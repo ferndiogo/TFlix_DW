@@ -5,11 +5,6 @@
     ViewData["Title"] = "Index";
 }
 
-
-@inject SignInManager<ApplicationUser> _signInManager
-@inject UserManager<ApplicationUser> _userManager
-
-
 @if (User.IsInRole("Administrador"))
 {
 
@@ -68,56 +63,42 @@
         </tbody>
     </table>
 }
-else if (User.IsInRole("Cliente")) { 
+else if (User.IsInRole("Cliente") || User.IsInRole("Alugueres")) {
 
+        <h1>Susbcrições</h1>
 
-    <h1>Susbcrições</h1>
+        <div class="columns">
+            <ul class="price">
+                <li class="header">Básico</li>
+                <li class="grey">4,99€ / mês</li>
+                <li class="descr">Filmes Ilimitados</li>
+                <li class="descr">Séries Ilimitadas</li>
+                <li class="descr">Qualidade: 720p</li>
+                <li class="grey"><a class="button-34" asp-action="AlterarRole">Adere Aqui</a></li>
+            </ul>
+        </div> 
+        <div class="columns">
+            <ul class="price">
+                <li class="header">Intermédio</li>
+                <li class="grey">8,99€ / mês</li>
+                <li class="descr">Filmes Ilimitados</li>
+                <li class="descr">Séries Ilimitadas</li>
+                <li class="descr">Qualidade: Full HD</li>
+                <li class="grey"><a class="button-34" asp-action="AlterarRole">Adere Aqui</a></li>
+            </ul>
+        </div> 
 
-     <div class="columns">
-      <ul class="price">
-        <li class="header">Básico</li>
-        <li class="grey">4,99€ / mês</li>
-        <li class="descr">Filmes Ilimitados</li>
-        <li class="descr">Séries Ilimitadas</li>
-        <li class="descr">Qualidade: 720p</li>
-        <li class="grey"><button class="button-34">Adere Aqui</button></li>
-       
-      </ul>
-    </div> 
+        <div class="columns">
+            <ul class="price">
+                <li class="header">Anual</li>
+                <li class="grey">80€ / ano</li>
+                <li class="descr" >Filmes Ilimitados</li>
+                <li class="descr">Séries Ilimitadas</li>
+                <li class="descr">Qualidade: 4K</li>
+                <li class="grey"><a class="button-34" asp-action="AlterarRole">Adere Aqui</a></li>
+            </ul>
+        </div>
 
-     <div class="columns">
-      <ul class="price">
-        <li class="header">Intermédio</li>
-        <li class="grey">8,99€ / mês</li>
-        <li class="descr">Filmes Ilimitados</li>
-        <li class="descr">Séries Ilimitadas</li>
-        <li class="descr">Qualidade: Full HD</li>
-        <li class="grey"><button class="button-34">Adere Aqui</button></li>
-      </ul>
-    </div> 
+        <h3>Por favor faça Logout depois de escolher o pack para ter acesso ás suas série e filmes.</h3>
 
-     <div class="columns">
-      <ul class="price">
-        <li class="header">Anual</li>
-        <li class="grey">80€ / ano</li>
-        <li class="descr" >Filmes Ilimitados</li>
-        <li class="descr">Séries Ilimitadas</li>
-        <li class="descr">Qualidade: 4K</li>
-        <li class="grey"><button class="button-34">Adere Aqui</button></li>
-      </ul>
-    </div>  
-
-}else{
-
-    <h1>Cria conta para poderes ter acesso a todos os detalhes!!</h1>
-
-    <div>
-        <form class = "bt">
-        <img alt ="Slogan" src="~/logo (5).png" />
-        <br />
-        <button class="button-34" role="button" asp-area="Identity" asp-page="/Account/Register">Registo</button>
-        <br />
-        <button class="button-34" role="button" asp-area="Identity" asp-page="/Account/Login">Login</button>
-        </form>
-    </div> 
 }

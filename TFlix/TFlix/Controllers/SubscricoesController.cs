@@ -1,39 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
 using TFlix.Models;
-using TFlix.Areas.Identity.Pages.Account;
 
 
 namespace TFlix.Controllers
 {
     public class SubscricoesController : Controller
     {
+        private readonly ApplicationDbContext _context;
 
         private readonly UserManager<ApplicationUser> _userManager;
 
-        private readonly ApplicationDbContext _context;
 
-
-        public SubscricoesController(ApplicationDbContext context)
+        public SubscricoesController(UserManager<ApplicationUser> userManager, ApplicationDbContext context)
         {
+            _userManager = userManager;
             _context = context;
-        }
-
-        public async Task<IActionResult> EditarRole()
-        {
-            var user = await _context.Users.FirstOrDefaultAsync(e => e.Id == e.Id);
-
-            // Add that user to the admin role:
-            await _userManager.AddToRoleAsync(user, "Subscritor");
-            await _context.SaveChangesAsync();
-            return View(ViewBag);
         }
 
         // GET: Subscricoes
@@ -43,6 +29,7 @@ namespace TFlix.Controllers
             return View(await applicationDbContext.ToListAsync());
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Subscricoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
@@ -62,6 +49,7 @@ namespace TFlix.Controllers
             return View(subscricao);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Subscricoes/Create
         public IActionResult Create()
         {
@@ -69,6 +57,7 @@ namespace TFlix.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Subscricoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -86,6 +75,7 @@ namespace TFlix.Controllers
             return View(subscricao);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Subscricoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
@@ -103,6 +93,7 @@ namespace TFlix.Controllers
             return View(subscricao);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Subscricoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
@@ -139,6 +130,7 @@ namespace TFlix.Controllers
             return View(subscricao);
         }
 
+        [Authorize(Roles = "Administrador")]
         // GET: Subscricoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
@@ -158,6 +150,7 @@ namespace TFlix.Controllers
             return View(subscricao);
         }
 
+        [Authorize(Roles = "Administrador")]
         // POST: Subscricoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
@@ -172,14 +165,24 @@ namespace TFlix.Controllers
             {
                 _context.Subscricoes.Remove(subscricao);
             }
-            
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool SubscricaoExists(int id)
         {
-          return _context.Subscricoes.Any(e => e.Id == id);
+            return _context.Subscricoes.Any(e => e.Id == id);
         }
+        
+        public async Task<IActionResult> AlterarRole()
+        {
+            var userData = await _userManager.GetUserAsync(User);
+            await _userManager.RemoveFromRoleAsync(@userData, "Cliente");
+            await _userManager.AddToRoleAsync(@userData, "Subscritor");
+            return RedirectToAction(nameof(Index));
+        }
+
+
     }
 }

@@ -27,9 +27,10 @@ namespace TFlix.Controllers
             return View();
         }
 
-        public IActionResult RegLog() {
+        public IActionResult RegLog()
+        {
 
-            return View(); 
+            return View();
 
         }
 
