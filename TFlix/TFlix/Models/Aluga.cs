@@ -40,14 +40,14 @@ namespace TFlix.Models
         /// </summary>
         [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
         [Display(Name = "Data de Inicio")]
-        public string DataInicio { get; set; }
+        public DateTime DataInicio { get; set; }
 
         /// <summary>
         /// Data de fim da subscrição
         /// </summary>
         [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
         [Display(Name = "Data de Fim")]
-        public string DataFim { get; set; }
+        public DateTime DataFim { get; set; }
 
     }
 
