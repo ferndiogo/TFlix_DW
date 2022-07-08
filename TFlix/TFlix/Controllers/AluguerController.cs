@@ -56,8 +56,8 @@ namespace TFlix.Controllers
         // GET: Aluguer/Create
         public IActionResult Create()
         {
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Id");
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id");
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo");
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome");
             return View();
         }
 
@@ -67,16 +67,20 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FilmeFK,UtilizadorFK,Preco,DataInicio,DataFim")] Aluga aluga)
+        public async Task<IActionResult> Create([Bind("Id,FilmeFK,UtilizadorFK,AuxPreco,Preco,DataInicio,DataFim")] Aluga aluga)
         {
+
+            // transfer data from AuxPrice to Price
+            aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
+
             if (ModelState.IsValid)
             {
                 _context.Add(aluga);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Id", aluga.FilmeFK);
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id", aluga.UtilizadorFK);
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo", aluga.FilmeFK);
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", aluga.UtilizadorFK);
             return View(aluga);
         }
 
@@ -94,8 +98,8 @@ namespace TFlix.Controllers
             {
                 return NotFound();
             }
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Id", aluga.FilmeFK);
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id", aluga.UtilizadorFK);
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo", aluga.FilmeFK);
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", aluga.UtilizadorFK);
             return View(aluga);
         }
 
@@ -132,8 +136,8 @@ namespace TFlix.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Id", aluga.FilmeFK);
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id", aluga.UtilizadorFK);
+            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titilo", aluga.FilmeFK);
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", aluga.UtilizadorFK);
             return View(aluga);
         }
 

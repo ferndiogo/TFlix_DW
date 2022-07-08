@@ -82,6 +82,8 @@ namespace TFlix.Models
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
         [Display(Name = "Data de Nascimento")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
         public DateTime DataNasc { get; set; }
 
         /// <summary>
