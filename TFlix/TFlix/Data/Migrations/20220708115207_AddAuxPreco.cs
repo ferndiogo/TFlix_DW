@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TFlix.Migrations
 {
-    public partial class AlteracaoData : Migration
+    public partial class AddAuxPreco : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -30,28 +30,28 @@ namespace TFlix.Migrations
                 keyColumn: "Id",
                 keyValue: "a",
                 column: "ConcurrencyStamp",
-                value: "2020ce2d-8b7e-4a41-861b-66ef46aa3478");
+                value: "3873db6a-e134-4396-b2e7-e7464e0ef12b");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "al",
                 columns: new[] { "ConcurrencyStamp", "NormalizedName" },
-                values: new object[] { "f935cb43-52da-452f-84ed-68bad0363099", "ALUGUERES" });
+                values: new object[] { "61bb40a4-df3f-4802-9f72-562d0d3548b8", "ALUGUERES" });
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "c",
                 column: "ConcurrencyStamp",
-                value: "6f661526-1af8-445d-94a9-aeb18a97de1b");
+                value: "f6dff349-011e-4658-8003-453e345cc431");
 
             migrationBuilder.UpdateData(
                 table: "AspNetRoles",
                 keyColumn: "Id",
                 keyValue: "s",
                 column: "ConcurrencyStamp",
-                value: "6861fec6-55f1-4171-a4ca-0fbc40fbf269");
+                value: "b1daa6fe-03d4-455e-b7f8-d0f2589a2da1");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

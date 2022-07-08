@@ -53,7 +53,7 @@ namespace TFlix.Controllers
         // GET: Subscricoes/Create
         public IActionResult Create()
         {
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id");
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome");
             return View();
         }
 
@@ -63,15 +63,19 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UtilizadorFK,Duracao,Preco,DataInicio,DataFim")] Subscricao subscricao)
+        public async Task<IActionResult> Create([Bind("Id,UtilizadorFK,Duracao,AuxPreco,Preco,DataInicio,DataFim")] Subscricao subscricao)
         {
+
+            // transfer data from AuxPrice to Price
+            subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
+
             if (ModelState.IsValid)
             {
                 _context.Add(subscricao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id", subscricao.UtilizadorFK);
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", subscricao.UtilizadorFK);
             return View(subscricao);
         }
 
@@ -89,7 +93,7 @@ namespace TFlix.Controllers
             {
                 return NotFound();
             }
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id", subscricao.UtilizadorFK);
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", subscricao.UtilizadorFK);
             return View(subscricao);
         }
 
@@ -126,7 +130,7 @@ namespace TFlix.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id", subscricao.UtilizadorFK);
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", subscricao.UtilizadorFK);
             return View(subscricao);
         }
 

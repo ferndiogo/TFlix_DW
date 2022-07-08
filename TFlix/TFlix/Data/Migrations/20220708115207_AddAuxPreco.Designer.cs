@@ -12,8 +12,8 @@ using TFlix.Data;
 namespace TFlix.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220703235217_AlteracaoData")]
-    partial class AlteracaoData
+    [Migration("20220708115207_AddAuxPreco")]
+    partial class AddAuxPreco
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -69,28 +69,28 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "2020ce2d-8b7e-4a41-861b-66ef46aa3478",
+                            ConcurrencyStamp = "3873db6a-e134-4396-b2e7-e7464e0ef12b",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "6f661526-1af8-445d-94a9-aeb18a97de1b",
+                            ConcurrencyStamp = "f6dff349-011e-4658-8003-453e345cc431",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         },
                         new
                         {
                             Id = "s",
-                            ConcurrencyStamp = "6861fec6-55f1-4171-a4ca-0fbc40fbf269",
+                            ConcurrencyStamp = "b1daa6fe-03d4-455e-b7f8-d0f2589a2da1",
                             Name = "Subscritor",
                             NormalizedName = "SUBSCRITOR"
                         },
                         new
                         {
                             Id = "al",
-                            ConcurrencyStamp = "f935cb43-52da-452f-84ed-68bad0363099",
+                            ConcurrencyStamp = "61bb40a4-df3f-4802-9f72-562d0d3548b8",
                             Name = "Alugueres",
                             NormalizedName = "ALUGUERES"
                         });
