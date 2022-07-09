@@ -162,3 +162,23 @@ p {
 .sobre {
     color:#ffffff;
 }
+
+li {
+    color:#ffffff;    
+}
+
+.ckeckFilmes, .ckeckSeries {
+    display: none;
+}
+
+.btn-info {
+    color: #ffffff;
+    background-color: #5E5DF0;
+    border-color: #5E5DF0;
+}
+
+    .btn-info:is(:hover) {
+        color: #ffffff;
+        background-color: #5E5Dc0;
+        border-color: #5E5DF0;
+    }
