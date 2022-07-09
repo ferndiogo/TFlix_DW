@@ -73,14 +73,18 @@ namespace TFlix.Controllers
             // transfer data from AuxPrice to Price
             aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
 
+            aluga.DataInicio = DateTime.Now;
+            aluga.DataFim = aluga.DataInicio.AddMonths(12);
+            
             if (ModelState.IsValid)
             {
                 _context.Add(aluga);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["FilmeFK"] = new SelectList(_context.Filmes, "Id", "Titulo", aluga.FilmeFK);
+            
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", aluga.UtilizadorFK);
+            ViewData["Filmes"] = new SelectList(_context.Filmes, "Id", "Id", aluga.FilmeFK);
             return View(aluga);
         }
 

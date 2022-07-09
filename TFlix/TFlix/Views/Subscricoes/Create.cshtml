@@ -17,7 +17,7 @@
     $(document).ready(function (){
         $("#btnAddSerie").click(function (){
 
-            $("#listaSeries").append("<li>" + $("#Series option:selected").text() + "<input type='checkbox' name='ckeckFilmes' id='ckeckSeries' class='ckeckSeries' checked='checked' value='" + $("#Series option:selected").val() + "'></li>");
+            $("#listaSeries").append("<li>" + $("#Series option:selected").text() + "<input type='checkbox' name='ckeckSeries' id='ckeckSeries' class='ckeckSeries' checked='checked' value='" + $("#Series option:selected").val() + "'></li>");
         }); 
     });
 
@@ -40,27 +40,21 @@
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="Duracao" class="control-label"></label>
-                <input asp-for="Duracao" class="form-control" />
-                <span asp-validation-for="Duracao" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="AuxPreco" class="control-label"></label>
-                <input asp-for="AuxPreco" class="form-control" />
-                <span asp-validation-for="AuxPreco" class="text-danger"></span>
+                <select asp-for="AuxPreco" class ="form-control">
+                    <option value="">Escolha uma opção</option>
+                    <option value="10,99">10,99 por 1 mês</option>
+                    <option value="39,99">39,99 por 6 meses</option>
+                    <option value="69,99">69,99 por 12 meses</option>
+                </select>
             </div>
             <div class="form-group">
-                <label asp-for="DataInicio" class="control-label"></label>
-                <input asp-for="DataInicio" class="form-control" />
-                <span asp-validation-for="DataInicio" class="text-danger"></span>
+                <br />
+                <a href="~/Filmes" class="button">Lista de filmes disponíveis</a>
             </div>
             <div class="form-group">
-                <label asp-for="DataFim" class="control-label"></label>
-                <input asp-for="DataFim" class="form-control" />
-                <span asp-validation-for="DataFim" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="control-label">Filmes</label>
+                <br />
+                <label class="control-label">Filme</label>
                 @Html.DropDownListFor(m=>m.Filmes, new SelectList(ViewBag.Filmes,"Id","Titulo") , new {@class= "form-control" })
                 <br />
                 <button type="button" class="btn btn-info" id="btnAddFilme">Adicionar filme</button>
@@ -69,12 +63,20 @@
                 <br />
                 <ul id="listaFilmes"></ul>
             </div>
-            @*<div class="form-group">
-                <label class="control-label">Series</label>
-                @Html.DropDownListFor(m=>m.Series, new SelectList(ViewBag.Series,"Id","Titulo") , new {@class= "form-control" })
-                <button id="btnAddSerie">Adicionar</button>
+            <div class="form-group">
+                <a href="~/Series" class="button">Lista de séries disponíveis</a>
             </div>
-            <ul id="listaSeries"></ul>*@
+            <div class="form-group">
+                <br />
+                <label class="control-label">Série</label>
+                @Html.DropDownListFor(m=>m.Series, new SelectList(ViewBag.Series,"Id","Titulo") , new {@class= "form-control" })
+                <br />
+                <button type="button" class="btn btn-info" id="btnAddSerie">Adicionar série</button>
+            </div>
+            <div>
+                <br />
+                <ul id="listaSeries"></ul>
+            </div>
             <div class="form-group">
                 <input type="submit" value="Criar" class="button-34" />
             </div>

@@ -30,8 +30,7 @@ namespace TFlix.Models
         /// <summary>
         /// Duração da subscrição
         /// </summary>
-        [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
-        [Display(Name = "Duração")]
+        [Display(Name = "Duração (meses)")]
         public int Duracao { get; set; }
 
         /// <summary>
@@ -51,8 +50,8 @@ namespace TFlix.Models
         /// <summary>
         /// Data de inicio da subscrição
         /// </summary>
-        [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
-        [Display(Name = "Data de Inicio")]
+        
+        [Display(Name = "Data de Início")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime DataInicio { get; set; }
@@ -60,7 +59,6 @@ namespace TFlix.Models
         /// <summary>
         /// Data de fim da subscrição
         /// </summary>
-        [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
         [Display(Name = "Data de Fim")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
@@ -70,7 +68,7 @@ namespace TFlix.Models
         /// Define as séries que pertencem á subscrição
         /// </summary>
         public ICollection<Serie> Series { get; set; }
-
+       
         /// <summary>
         /// Lista de filmes
         /// </summary>

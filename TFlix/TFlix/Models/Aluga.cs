@@ -33,7 +33,6 @@ namespace TFlix.Models
         /// </summary>
         [NotMapped]  // this anotation tells the EF that this attribute must not be represented on database
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        [RegularExpression("9.99|14.99|19.99", ErrorMessage = "You must write the price of appointement")]
         [Display(Name = "Preço")]
         public string AuxPreco { get; set; }
 
