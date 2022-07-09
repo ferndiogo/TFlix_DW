@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using NuGet.Packaging;
 using TFlix.Data;
 using TFlix.Models;
 
@@ -54,6 +55,10 @@ namespace TFlix.Controllers
         public IActionResult Create()
         {
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome");
+
+            ViewBag.Filmes = _context.Filmes.ToList();
+            ViewBag.Series = _context.Series.ToList();
+
             return View();
         }
 
@@ -63,11 +68,26 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UtilizadorFK,Duracao,AuxPreco,Preco,DataInicio,DataFim")] Subscricao subscricao)
+        public async Task<IActionResult> Create([Bind("Id,UtilizadorFK,Filmes,Series,,Duracao,AuxPreco,Preco,DataInicio,DataFim")] Subscricao subscricao)
         {
 
             // transfer data from AuxPrice to Price
             subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
+
+            string lstTags = Request.Form["ckeckFilmes"];
+
+            if (!string.IsNullOrEmpty(lstTags))
+            {
+                int[] splTags = lstTags.Split(',').Select(Int32.Parse).ToArray();
+
+                if (splTags.Count() > 0)
+                {
+                    var PostTags = _context.Filmes.Where(w => splTags.Contains(w.Id)).ToList();
+
+                    subscricao.Filmes.AddRange(PostTags);
+                }
+            }
+
 
             if (ModelState.IsValid)
             {
@@ -76,6 +96,8 @@ namespace TFlix.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", subscricao.UtilizadorFK);
+            ViewData["Filmes"] = new SelectList(_context.Filmes, "Id", "Nome", subscricao.Filmes);
+            ViewData["Series"] = new SelectList(_context.Series, "Id", "Id", subscricao.Series);
             return View(subscricao);
         }
 
@@ -93,7 +115,7 @@ namespace TFlix.Controllers
             {
                 return NotFound();
             }
-            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", subscricao.UtilizadorFK);
+            ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Id", subscricao.UtilizadorFK);
             return View(subscricao);
         }
 
