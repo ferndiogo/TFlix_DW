@@ -24,10 +24,16 @@ namespace TFlix.Controllers
         }
 
         // GET: Subscricoes
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(Subscricao subscricao)
         {
-            var applicationDbContext = _context.Subscricoes.Include(s => s.Utilizador);
+
+            //ViewBag.Filmes = _context.Filmes.ToList();
+            var applicationDbContext = _context.Subscricoes
+                .Include(s => s.Utilizador)
+                .Include(s => s.Filmes)
+                .Include(s => s.Series);
             return View(await applicationDbContext.ToListAsync());
+
         }
 
         [Authorize(Roles = "Administrador")]
@@ -74,7 +80,27 @@ namespace TFlix.Controllers
             // transfer data from AuxPrice to Price
             subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
 
+            subscricao.DataInicio = DateTime.Now;
+
+            if (subscricao.Preco < 12)
+            {
+                subscricao.DataFim = subscricao.DataInicio.AddMonths(1);
+                subscricao.Duracao = 1;
+            }
+            else if (subscricao.Preco < 45 && subscricao.Preco > 13)
+            {
+                subscricao.DataFim = subscricao.DataInicio.AddMonths(6);
+                subscricao.Duracao = 6;
+            }
+            else 
+            {
+                subscricao.DataFim = subscricao.DataInicio.AddMonths(12);
+                subscricao.Duracao = 12;
+            }
+            
+
             string lstTags = Request.Form["ckeckFilmes"];
+            string lstTags1 = Request.Form["ckeckSeries"];
 
             if (!string.IsNullOrEmpty(lstTags))
             {
@@ -88,6 +114,18 @@ namespace TFlix.Controllers
                 }
             }
 
+            if (!string.IsNullOrEmpty(lstTags1))
+            {
+                int[] splTags1 = lstTags1.Split(',').Select(Int32.Parse).ToArray();
+
+                if (splTags1.Count() > 0)
+                {
+                    var PostTags1 = _context.Series.Where(w => splTags1.Contains(w.Id)).ToList();
+
+                    subscricao.Series.AddRange(PostTags1);
+                }
+            }
+
 
             if (ModelState.IsValid)
             {
@@ -96,8 +134,6 @@ namespace TFlix.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["UtilizadorFK"] = new SelectList(_context.Utilizadores, "Id", "Nome", subscricao.UtilizadorFK);
-            ViewData["Filmes"] = new SelectList(_context.Filmes, "Id", "Nome", subscricao.Filmes);
-            ViewData["Series"] = new SelectList(_context.Series, "Id", "Id", subscricao.Series);
             return View(subscricao);
         }
 

@@ -99,11 +99,13 @@ namespace TFlix.Models
         /// <summary>
         /// FK usada para conectar 'business data' à 'authetication DB'
         /// </summary>
+        [Display(Name = "ID Utilizador")]
         public string UserID { get; set; }
 
         /// <summary>
         /// FK usada para conectar 'business data' à 'authetication DB'
         /// </summary>
+        [Display(Name = "Tipo de Utilizador")]
         public string UserF { get; set; }
 
     }

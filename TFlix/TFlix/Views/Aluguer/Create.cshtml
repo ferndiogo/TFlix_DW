@@ -4,6 +4,7 @@
     ViewData["Title"] = "Criar";
 }
 
+
 <h1>Criar</h1>
 
 <h4>Aluguer</h4>
@@ -18,8 +19,13 @@
                 <select asp-for="UtilizadorFK" class ="form-control" asp-items="ViewBag.UtilizadorFK">
                     <option value="">Escolha um utilizador</option>
                 </select>
+                <br />
             </div>
             <div class="form-group">
+                <a href="~/Filmes" class="button">Lista de filmes disponíveis</a>
+            </div>
+            <div class="form-group">
+                <br />
                 <label class="control-label">Filme</label>
                 <select asp-for="FilmeFK" class ="form-control" asp-items="ViewBag.FilmeFK">
                     <option value="">Escolha um filme</option>
@@ -27,19 +33,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="AuxPreco" class="control-label"></label>
-                <input asp-for="AuxPreco" class="form-control" />
-                <span asp-validation-for="AuxPreco" class="text-danger"></span>
+                <select asp-for="AuxPreco" class ="form-control">
+                    <option value="5,99">5,99 por 1 filme (1 ano)</option>
+                </select>
             </div>
-            <div class="form-group">
-                <label asp-for="DataInicio" class="control-label"></label>
-                <input asp-for="DataInicio" class="form-control" />
-                <span asp-validation-for="DataInicio" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DataFim" class="control-label"></label>
-                <input asp-for="DataFim" class="form-control" />
-                <span asp-validation-for="DataFim" class="text-danger"></span>
-            </div>
+            <br />
             <div class="form-group">
                 <input type="submit" value="Criar" class="button-34" />
             </div>
@@ -50,6 +48,7 @@
 <div>
     <a asp-action="Index">Voltar à lista</a>
 </div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
