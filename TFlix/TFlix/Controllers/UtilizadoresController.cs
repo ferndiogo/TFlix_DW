@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
 using TFlix.Models;
 
 namespace TFlix.Controllers
 {
+
     public class UtilizadoresController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -28,7 +24,7 @@ namespace TFlix.Controllers
         // GET: Utilizadores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null)
+
             {
                 return NotFound();
             }
@@ -54,7 +50,7 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Email,Password,NIF,Morada")] Utilizador utilizador)
+
         {
             if (ModelState.IsValid)
             {
@@ -68,7 +64,7 @@ namespace TFlix.Controllers
         // GET: Utilizadores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
+
             {
                 return NotFound();
             }
@@ -86,7 +82,7 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,Password,NIF,Morada")] Utilizador utilizador)
+
         {
             if (id != utilizador.Id)
             {
@@ -119,7 +115,7 @@ namespace TFlix.Controllers
         // GET: Utilizadores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null)
+
             {
                 return NotFound();
             }
@@ -139,8 +135,7 @@ namespace TFlix.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var utilizador = await _context.Utilizadores.FindAsync(id);
-            _context.Utilizadores.Remove(utilizador);
+
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }

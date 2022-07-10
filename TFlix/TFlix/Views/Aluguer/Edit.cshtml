@@ -1,0 +1,56 @@
+﻿@model TFlix.Models.Aluga
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h1>Editar</h1>
+
+<h4>Aluguer</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label class="control-label">Filme</label>
+                <select asp-for="FilmeFK" class="form-control" asp-items="ViewBag.FilmeFK"></select>
+                <span asp-validation-for="FilmeFK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Utilizador</label>
+                <select asp-for="UtilizadorFK" class="form-control" asp-items="ViewBag.UtilizadorFK"></select>
+                <span asp-validation-for="UtilizadorFK" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AuxPreco" class="control-label"></label>
+                <select asp-for="AuxPreco" class ="form-control">
+                    <option value="5,99">5,99 por 1 filme (1 ano)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Data de Início</label>
+                <input asp-for="DataInicio" class="form-control" />
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label class="control-label">Data de Fim</label>
+                <input asp-for="DataFim" class="form-control" />
+                <span asp-validation-for="DataFim" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <br />
+                <input type="submit" value="Guardar" class="button-34" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Voltar à lista</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

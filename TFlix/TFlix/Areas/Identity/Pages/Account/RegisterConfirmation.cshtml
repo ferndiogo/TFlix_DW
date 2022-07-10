@@ -1,0 +1,22 @@
+﻿@page
+@model RegisterConfirmationModel
+@{
+    ViewData["Title"] = "Confirmação de registo";
+}
+
+<h1>@ViewData["Title"]</h1>
+@{
+    if (@Model.DisplayConfirmAccountLink)
+    {
+<p>
+    <a id="confirm-link" href="@Model.EmailConfirmationUrl">Clica aqui para confirmar a tua conta.</a>
+</p>
+    }
+    else
+    {
+<p>
+        Por favor verifica o teu email para confirmar a tua conta.
+</p>
+    }
+}
+

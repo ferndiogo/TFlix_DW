@@ -79,7 +79,6 @@ body {
 
 .row {
     margin-left: 0px !important;
-
 }
 
 
@@ -87,19 +86,99 @@ body {
     height: 300px;
     margin: auto;
     display: block;
-   
-    
 }
 
 img{
     display: block;
     margin: auto;
     margin-bottom: 8px;
-    
-    
+}
 
+h1,h2, h3, h4 {
+    color:#ffffff;
+    text-align:center;
+}
+
+.checkbox {
+    color:#ffffff;
+}
+
+td, th {
+    color:#ffffff;
+}
+
+.form-group, .col-sm-2, .col-sm-10 {
+    color: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.columns {
+    float: left;
+    width: 33.3%;
+    padding: 8px;
+}
+
+.price {
+    list-style-type: none;
+    border: 1px solid #eee;
+    margin: 0;
+    padding: 0;
+    -webkit-transition: 0.3s;
+    transition: 0.3s;
 }
 
 
+.price .header {
+    background-color: #111;
+    color: white;
+    font-size: 25px;
+}
+
+.price li {
+    border-bottom: 1px solid #eee;
+    padding: 20px;
+    text-align: center;
+}
+
+.price .grey {
+    background-color: #eee;
+    font-size: 20px;
+}
+
+.price .descr {
+    background-color: #6610f2;
+    font-size: 20px;
+    color: #ffffff;
+}
 
 
+p {
+    text-align:center;
+}
+
+.sobre {
+    color:#ffffff;
+}
+
+li {
+    color:#ffffff;    
+}
+
+.ckeckFilmes, .ckeckSeries {
+    display: none;
+}
+
+.btn-info {
+    color: #ffffff;
+    background-color: #5E5DF0;
+    border-color: #5E5DF0;
+}
+
+    .btn-info:is(:hover) {
+        color: #ffffff;
+        background-color: #5E5Dc0;
+        border-color: #5E5DF0;
+    }

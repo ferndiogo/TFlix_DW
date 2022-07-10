@@ -8,12 +8,26 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\favicon.png" />
+    <Content Remove="wwwroot\Fotos\Series\dfgdf_0355e0b1-4b54-440b-b080-6273b445a3cf.jpeg" />
+    <Content Remove="wwwroot\Fotos\Series\dfgdf_4033e747-3e3b-4a57-a662-fe05ab74bc89.jpeg" />
+    <Content Remove="wwwroot\Fotos\Series\dfgdf_9de27b93-c293-40ea-a72d-bb8519617f11.jpeg" />
+    <Content Remove="wwwroot\Fotos\Series\qwewqe_782af0d0-4ec0-48c9-a596-15d262589648.jpeg" />
+    <Content Remove="wwwroot\Fotos\Series\Ratched_234f7835-3265-4ef4-8f29-0933d0440db9.jpeg" />
+    <Content Remove="wwwroot\Fotos\Series\sdasdasd_0310bb48-fc9f-452a-a143-c554740e99f6.jpeg" />
+    <Content Remove="wwwroot\Fotos\Series\sdff_1a7822a2-abaf-4a25-9b46-be5c12df4a37.jpeg" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.4" />
-    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4" />
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 
