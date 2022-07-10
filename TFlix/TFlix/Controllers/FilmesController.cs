@@ -178,13 +178,14 @@ namespace TFlix.Controllers
                 return RedirectToAction("Index");
             }
 
-            if (filmeImgGuardada != "semFoto.png")
+            if (novoFilme == null)
+            {
+                filme.Imagem = "semFoto.png";
+
+            } else if (filmeImgGuardada != "semFoto.png")
             {
                 System.IO.File.Delete("wwwroot//Fotos//Filmes//" + Path.Combine(filmeImgGuardada));
-            }
-
-
-            if (!(novoFilme.ContentType == "image/jpeg" || novoFilme.ContentType == "image/png" || novoFilme.ContentType == "image/jpg"))
+            } else if (!(novoFilme.ContentType == "image/jpeg" || novoFilme.ContentType == "image/png" || novoFilme.ContentType == "image/jpg"))
             {
                 // menssagem de erro
                 ModelState.AddModelError("", "Por favor, se pretende enviar um ficheiro, escolha uma imagem suportada.");

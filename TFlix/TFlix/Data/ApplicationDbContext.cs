@@ -48,9 +48,7 @@ namespace TFlix.Data
             // seed the Roles data
             modelBuilder.Entity<IdentityRole>().HasData(
               new IdentityRole { Id = "a", Name = "Administrador", NormalizedName = "ADMINISTRADOR" },
-              new IdentityRole { Id = "c", Name = "Cliente", NormalizedName = "CLIENTE" },
-              new IdentityRole { Id = "s", Name = "Subscritor", NormalizedName = "SUBSCRITOR" },
-              new IdentityRole { Id = "al", Name = "Alugueres", NormalizedName = "ALUGUERES" }
+              new IdentityRole { Id = "c", Name = "Cliente", NormalizedName = "CLIENTE" }
               );
 
             modelBuilder.Entity<Serie>().HasData(

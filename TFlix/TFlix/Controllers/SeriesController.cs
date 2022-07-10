@@ -178,14 +178,14 @@ namespace TFlix.Controllers
                 return RedirectToAction("Index");
             }
 
-
-            if (seriesImgGuardada != "semFoto.png")
+            if (novaSerie == null)
+            {
+                serie.Imagem = "semFoto.png";
+            }
+            else if (seriesImgGuardada != "semFoto.png")
             {
                 System.IO.File.Delete("wwwroot//Fotos//Series//" + Path.Combine(seriesImgGuardada));
-            }
-
-
-            if (!(novaSerie.ContentType == "image/jpeg" || novaSerie.ContentType == "image/png" || novaSerie.ContentType == "image/jpg"))
+            }else if (!(novaSerie.ContentType == "image/jpeg" || novaSerie.ContentType == "image/png" || novaSerie.ContentType == "image/jpg"))
             {
                 // menssagem de erro
                 ModelState.AddModelError("", "Por favor, se pretende enviar um ficheiro, escolha uma imagem suportada.");
@@ -203,8 +203,6 @@ namespace TFlix.Controllers
                 // adiciona o nome da imagem aos dados da serie
                 serie.Imagem = imageName;
             }
-
-
 
 
             if (ModelState.IsValid)
