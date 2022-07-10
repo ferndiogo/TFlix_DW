@@ -44,7 +44,8 @@ namespace TFlix.Models
         /// <summary>
         /// Preço da subscrição
         /// </summary>
-       public decimal Preco { get; set; }
+        [Display(Name = "Preço")]
+        public decimal Preco { get; set; }
 
 
         /// <summary>

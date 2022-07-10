@@ -20,7 +20,9 @@
             @Html.DisplayNameFor(model => model.Imagem)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Imagem)
+            <img src="~/Fotos/Filmes/@Html.DisplayFor(model => model.Imagem)"
+                 height="100"
+                 align="left" />
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Sinopse)

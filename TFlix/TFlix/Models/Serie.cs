@@ -66,7 +66,7 @@ namespace TFlix.Models
         /// Genero da série
         /// </summary>
         [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        [Display(Name = "Genero")]
+        [Display(Name = "Género")]
         [StringLength(20, ErrorMessage = "O {0} não pode ter mais do que {1} carateres.")]
         public string Genero { get; set; }
 

@@ -39,12 +39,13 @@ namespace TFlix.Models
         /// <summary>
         /// Preço da subscrição
         /// </summary>
+        [Display(Name = "Preço")]
         public decimal Preco { get; set; }
         /// <summary>
         /// Data de inicio da subscrição
         /// </summary>
         [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
-        [Display(Name = "Data de Inicio")]
+        [Display(Name = "Data de Início")]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
         public DateTime DataInicio { get; set; }
