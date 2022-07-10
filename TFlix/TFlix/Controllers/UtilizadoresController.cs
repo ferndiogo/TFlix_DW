@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
 using TFlix.Models;
@@ -7,7 +6,6 @@ using TFlix.Models;
 namespace TFlix.Controllers
 {
 
-    [Authorize(Roles = "Administrador")]
     public class UtilizadoresController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -26,7 +24,7 @@ namespace TFlix.Controllers
         // GET: Utilizadores/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.Utilizadores == null)
+
             {
                 return NotFound();
             }
@@ -52,7 +50,7 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Nome,Email,NIF,Morada,Pais,CodPostal,Sexo,DataNasc,UserID,UserF")] Utilizador utilizador)
+
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +64,7 @@ namespace TFlix.Controllers
         // GET: Utilizadores/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.Utilizadores == null)
+
             {
                 return NotFound();
             }
@@ -84,7 +82,7 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Nome,Email,NIF,Morada,Pais,CodPostal,Sexo,DataNasc,UserID,UserF")] Utilizador utilizador)
+
         {
             if (id != utilizador.Id)
             {
@@ -117,7 +115,7 @@ namespace TFlix.Controllers
         // GET: Utilizadores/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.Utilizadores == null)
+
             {
                 return NotFound();
             }
@@ -137,15 +135,6 @@ namespace TFlix.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.Utilizadores == null)
-            {
-                return Problem("Entity set 'ApplicationDbContext.Utilizadores'  is null.");
-            }
-            var utilizador = await _context.Utilizadores.FindAsync(id);
-            if (utilizador != null)
-            {
-                _context.Utilizadores.Remove(utilizador);
-            }
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));

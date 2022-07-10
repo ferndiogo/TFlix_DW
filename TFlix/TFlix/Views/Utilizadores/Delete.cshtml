@@ -1,12 +1,7 @@
 ﻿@model TFlix.Models.Utilizador
 
 @{
-    ViewData["Title"] = "Apagar";
-}
 
-<h1>Apagar</h1>
-
-<h3>Tem a certeza que deseja eliminar?</h3>
 <div>
     <h4>Utilizador</h4>
     <hr />
@@ -24,6 +19,7 @@
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class = "col-sm-2">
+
             @Html.DisplayNameFor(model => model.NIF)
         </dt>
         <dd class = "col-sm-10">
@@ -35,48 +31,9 @@
         <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Morada)
         </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Pais)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Pais)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.CodPostal)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.CodPostal)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.Sexo)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Sexo)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.DataNasc)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.DataNasc)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserID)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserID)
-        </dd>
-        <dt class = "col-sm-2">
-            @Html.DisplayNameFor(model => model.UserF)
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.UserF)
-        </dd>
+
     </dl>
     
     <form asp-action="Delete">
         <input type="hidden" asp-for="Id" />
-        <input type="submit" value="Apagar" class="btn btn-danger" /> |
-        <a asp-action="Index">Voltar à lista</a>
-    </form>
-</div>
 

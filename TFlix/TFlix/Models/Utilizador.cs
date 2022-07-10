@@ -20,38 +20,7 @@ namespace TFlix.Models
         /// </summary>
         public int Id { get; set; }
 
-        /// <summary>
-        /// Nome do utilizador
-        /// </summary>
-        /// [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        [StringLength(30, ErrorMessage = "O {0} não pode ter mais do que {1} carateres.")]
-        [Display(Name = "Nome")]
-        [RegularExpression("[A-ZÂÓÍa-záéíóúàèìòùâêîôûãõäëïöüñç '-]+", ErrorMessage = "Só pode escrever letras no {0}")]
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        public string Nome { get; set; }
 
-        /// <summary>
-        /// Email do utilizador
-        /// </summary>
-        [Display(Name = "Email")]
-        [EmailAddress(ErrorMessage = "Escreva um {0} válido, por favor.")]
-        public string Email { get; set; }
-
-        /// <summary>
-        /// NIF do utilizador
-        /// </summary>
-        /// [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        [Display(Name = "NIF")]
-        [StringLength(9, MinimumLength = 9, ErrorMessage = "O {0} tem de ter 9 carateres.")]
-        [RegularExpression("[123578][0-9]{8}", ErrorMessage = "O {0} deve começar por 1,2,3,5,7,8 seguido de 8 digitos numéricos.")]
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        public string NIF { get; set; }
-
-        /// <summary>
-        /// Morada do utilizador
-        /// </summary>
-        [Display(Name = "Morada")]
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
         public string Morada { get; set; }
 
         /// <summary>
