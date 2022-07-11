@@ -59,7 +59,7 @@ namespace TFlix.Controllers
             return View(subscricao);
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Cliente")]
         // GET: Subscricoes/Create
         public IActionResult Create()
         {
@@ -71,7 +71,7 @@ namespace TFlix.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Administrador")]
+        [Authorize(Roles = "Administrador, Cliente")]
         // POST: Subscricoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.

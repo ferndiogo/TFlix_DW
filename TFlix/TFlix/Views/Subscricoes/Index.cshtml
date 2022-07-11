@@ -5,10 +5,10 @@
     ViewData["Title"] = "Index";
 }
 
-@if (User.IsInRole("Administrador"))
-{
 
     <h1>Lista de Subscrições</h1>
+    @if (User.IsInRole("Administrador")){
+
 
     <p>
         <a asp-action="Create">Criar novas Subscrições</a>
@@ -78,43 +78,66 @@
             }
         </tbody>
     </table>
-}
-else if (User.IsInRole("Cliente") || User.IsInRole("Alugueres")) {
+}else if (User.IsInRole("Cliente")){
+    <p>
+        <a asp-action="Create">Criar novas Subscrições</a>
+    </p>
 
-        <h1>Susbcrições</h1>
-
-        <div class="columns">
-            <ul class="price">
-                <li class="header">Básico</li>
-                <li class="grey">4,99€ / mês</li>
-                <li class="descr">Filmes Ilimitados</li>
-                <li class="descr">Séries Ilimitadas</li>
-                <li class="descr">Qualidade: 720p</li>
-                <li class="grey"><a class="button-34" asp-action="AlterarRole">Adere Aqui</a></li>
-            </ul>
-        </div> 
-        <div class="columns">
-            <ul class="price">
-                <li class="header">Intermédio</li>
-                <li class="grey">8,99€ / mês</li>
-                <li class="descr">Filmes Ilimitados</li>
-                <li class="descr">Séries Ilimitadas</li>
-                <li class="descr">Qualidade: Full HD</li>
-                <li class="grey"><a class="button-34" asp-action="AlterarRole">Adere Aqui</a></li>
-            </ul>
-        </div> 
-
-        <div class="columns">
-            <ul class="price">
-                <li class="header">Anual</li>
-                <li class="grey">80€ / ano</li>
-                <li class="descr" >Filmes Ilimitados</li>
-                <li class="descr">Séries Ilimitadas</li>
-                <li class="descr">Qualidade: 4K</li>
-                <li class="grey"><a class="button-34" asp-action="AlterarRole">Adere Aqui</a></li>
-            </ul>
-        </div>
-
-        <h3>Por favor faça Logout depois de escolher o pack para ter acesso ás suas série e filmes.</h3>
+         <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Utilizador)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Duracao)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Preco)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataInicio)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.DataFim)
+                </th>
+                 <th>
+                    @Html.DisplayNameFor(model => model.Filmes)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Series)
+                </th>
+                
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Utilizador.Nome)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Duracao)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Preco)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataInicio)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DataFim)
+                    </td>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.Filmes)
+                    </th>
+                    <th>
+                        @Html.DisplayFor(modelItem => item.Series)
+                    </th>
+                </tr>
+            }
+        </tbody>
+    </table>
 
 }
