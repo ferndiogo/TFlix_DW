@@ -44,13 +44,19 @@
             @Html.DisplayNameFor(model => model.Filmes)
         </dt>
         <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Filmes)
+            @foreach (var item2 in Model.Filmes) {
+                @Html.DisplayFor(modelItem => item2.Titulo)
+                <br />
+            }
         </dd>
         <dt class = "col-sm-2">
             @Html.DisplayNameFor(model => model.Series)
         </dt>
         <dd class = "col-sm-10">
-             @Html.DisplayFor(model => model.Series)
+             @foreach (var item2 in Model.Series) {
+                @Html.DisplayFor(modelItem => item2.Titulo)
+                <br />
+            }
         </dd>
     </dl>
 </div>
