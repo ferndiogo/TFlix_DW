@@ -44,8 +44,10 @@ namespace TFlix.Models
         /// Data de criação do filme
         /// </summary>
         [Required(ErrorMessage = "A {0} é de preenchimento obrigatório.")]
-        [Display(Name = "Data de Criação")]
-        public string DataCriacao { get; set; }
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        [DataType(DataType.Date)]
+        [Display(Name = "Data de Lançamento")]
+        public DateTime DataLancamento { get; set; }
 
         /// <summary>
         /// Classificação do filme
