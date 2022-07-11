@@ -33,8 +33,6 @@ namespace TFlix.Controllers.API
                                   Morada = a.Morada,
                                   CodPostal = a.CodPostal,
                                   Pais = a.Pais,
-                                  Subscricoes = a.Subscricoes,
-                                  Aluguer = a.Aluguer,
                                   UserF = a.UserF,
                               })
                               .ToListAsync();
@@ -56,10 +54,7 @@ namespace TFlix.Controllers.API
                                         Morada = a.Morada,
                                         CodPostal = a.CodPostal,
                                         Pais = a.Pais,
-                                        Subscricoes = a.Subscricoes,
-                                        Aluguer = a.Aluguer,
                                         UserF = a.UserF,
-                                        UserID = a.UserID,
                                     })
                                     .Where(a => a.Id == id)
                                     .FirstOrDefaultAsync();
