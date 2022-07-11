@@ -60,10 +60,14 @@
                         @Html.DisplayFor(modelItem => item.DataFim)
                     </td>
                     <th>
-                        @Html.DisplayFor(modelItem => item.Filmes)
+                        @foreach (var item2 in item.Filmes) {
+                            <li>@Html.DisplayFor(modelItem => item2.Titulo)</li>
+                        }
                     </th>
                     <th>
-                        @Html.DisplayFor(modelItem => item.Series)
+                         @foreach (var item2 in item.Series) {
+                            <li>@Html.DisplayFor(modelItem => item2.Titulo)</li>
+                        }
                     </th>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.Id">Editar</a> |
