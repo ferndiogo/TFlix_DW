@@ -18,14 +18,14 @@ namespace TFlix.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        [Authorize(Roles = "Administrador, Subscritor, Alugueres")]
+        [Authorize(Roles = "Administrador, Cliente")]
         // GET: Series
         public async Task<IActionResult> Index()
         {
             return View(await _context.Series.ToListAsync());
         }
 
-        [Authorize(Roles = "Administrador, Subscritor, Alugueres")]
+        [Authorize(Roles = "Administrador, Cliente")]
         // GET: Series/Details/5
         public async Task<IActionResult> Details(int? id)
         {
