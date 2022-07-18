@@ -79,7 +79,6 @@ namespace TFlix.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Id,UtilizadorFK,Filmes,Series,Duracao,AuxPreco,Preco,DataInicio,DataFim")] Subscricao subscricao)
         {
-
             // transfer data from AuxPrice to Price
             subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
 

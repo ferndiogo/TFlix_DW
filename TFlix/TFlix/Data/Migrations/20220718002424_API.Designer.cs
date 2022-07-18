@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TFlix.Data;
 
@@ -11,9 +12,10 @@ using TFlix.Data;
 namespace TFlix.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220718002424_API")]
+    partial class API
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +36,7 @@ namespace TFlix.Migrations
 
                     b.HasIndex("SubscricoesId");
 
-                    b.ToTable("FilmeSubscricao", (string)null);
+                    b.ToTable("FilmeSubscricao");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -202,7 +204,7 @@ namespace TFlix.Migrations
 
                     b.HasIndex("SubscricoesId");
 
-                    b.ToTable("SerieSubscricao", (string)null);
+                    b.ToTable("SerieSubscricao");
                 });
 
             modelBuilder.Entity("TFlix.Data.ApplicationUser", b =>
@@ -309,7 +311,7 @@ namespace TFlix.Migrations
 
                     b.HasIndex("UtilizadorFK");
 
-                    b.ToTable("Aluguers", (string)null);
+                    b.ToTable("Aluguers");
                 });
 
             modelBuilder.Entity("TFlix.Models.Filme", b =>
@@ -351,7 +353,7 @@ namespace TFlix.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Filmes", (string)null);
+                    b.ToTable("Filmes");
 
                     b.HasData(
                         new
@@ -423,7 +425,7 @@ namespace TFlix.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Series", (string)null);
+                    b.ToTable("Series");
 
                     b.HasData(
                         new
@@ -481,7 +483,7 @@ namespace TFlix.Migrations
 
                     b.HasIndex("UtilizadorFK");
 
-                    b.ToTable("Subscricoes", (string)null);
+                    b.ToTable("Subscricoes");
                 });
 
             modelBuilder.Entity("TFlix.Models.Utilizador", b =>
@@ -532,7 +534,7 @@ namespace TFlix.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Utilizadores", (string)null);
+                    b.ToTable("Utilizadores");
                 });
 
             modelBuilder.Entity("FilmeSubscricao", b =>

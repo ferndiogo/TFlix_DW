@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
+using Azure.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
