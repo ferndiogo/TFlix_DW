@@ -5,7 +5,8 @@
     },
     "mssql1": {
       "secretStore": "LocalSecretsFile",
-      "type": "mssql.local",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/tflixdbserver/databases/TFlix_db",
+      "type": "mssql.azure",
       "connectionId": "ConnectionStrings:DefaultConnection"
     }
   }

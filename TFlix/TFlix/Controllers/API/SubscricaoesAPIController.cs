@@ -110,9 +110,9 @@ namespace TFlix.Controllers.API
         [HttpPost]
         public async Task<ActionResult<Subscricao>> PostSubscricao([FromForm] Subscricao subscricao)
         {
-            subscricao.AuxPreco = "5,99";
+            //subscricao.AuxPreco = "5,99";
             // transfere o valor do AuxPreco para Preco
-            subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
+            //subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
 
            
 

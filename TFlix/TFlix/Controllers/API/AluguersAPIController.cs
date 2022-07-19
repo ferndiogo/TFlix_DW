@@ -34,8 +34,9 @@ namespace TFlix.Controllers.API
                                   Id = a.Id,
                                   NomeUtilizador = a.Utilizador.Nome,
                                   NomeFilme = a.Filme.Titulo,
+                                  UtilizadorFK = a.UtilizadorFK,
+                                  FilmeFK = a.FilmeFK,
                                   Preco = a.Preco,
-                                  AuxPreco = a.AuxPreco,
                                   DataInicio = a.DataInicio,
                                   DataFim = a.DataFim,
 
@@ -55,8 +56,9 @@ namespace TFlix.Controllers.API
                                   Id = a.Id,
                                   NomeUtilizador = a.Utilizador.Nome,
                                   NomeFilme = a.Filme.Titulo,
+                                  UtilizadorFK = a.UtilizadorFK,
+                                  FilmeFK = a.FilmeFK,
                                   Preco = a.Preco,
-                                  AuxPreco = a.AuxPreco,
                                   DataInicio = a.DataInicio,
                                   DataFim = a.DataFim,
 
@@ -83,7 +85,7 @@ namespace TFlix.Controllers.API
             }
 
             // transfere o valor do AuxPreco para Preco
-            aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
+            //aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
 
             aluga.DataInicio = DateTime.Now;
             aluga.DataFim = aluga.DataInicio.AddMonths(12);
@@ -114,18 +116,17 @@ namespace TFlix.Controllers.API
         [HttpPost]
         public async Task<ActionResult<Aluga>> PostAluga([FromForm]Aluga aluga)
         {
-            
-            aluga.AuxPreco = "5,99";
+            //aluga.AuxPreco = "14,99";
             // transfere o valor do AuxPreco para Preco
-            aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
+            //aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
 
             aluga.DataInicio = DateTime.Now;
             aluga.DataFim = aluga.DataInicio.AddMonths(12);
 
             _context.Aluguers.Add(aluga);
             await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetAluga", new { id = aluga.Id }, aluga);
+            aluga = await _context.Aluguers.Include(x => x.Utilizador).Include(x => x.Filme).FirstAsync(x => x.Id == aluga.Id);
+            return CreatedAtAction(nameof(GetAluga), new { id = aluga.Id }, aluga);
         }
 
         // DELETE: api/AluguersAPI/5

@@ -7,6 +7,8 @@ namespace TFlix.Models
         public int Id { get; set; }
         public string NomeFilme { get; set; }
         public string NomeUtilizador { get; set; }
+        public int UtilizadorFK { get; set; }
+        public int FilmeFK { get; set; }
         public string AuxPreco { get; set; }
         public decimal Preco { get; set; }
         public DateTime DataInicio { get; set; }

@@ -67,11 +67,11 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,FilmeFK,UtilizadorFK,AuxPreco,Preco,DataInicio,DataFim")] Aluga aluga)
+        public async Task<IActionResult> Create([Bind("Id,FilmeFK,UtilizadorFK,Preco,DataInicio,DataFim")] Aluga aluga)
         {
 
             // transfere o valor do AuxPreco para Preco
-            aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
+            //aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
 
             aluga.DataInicio = DateTime.Now;
             aluga.DataFim = aluga.DataInicio.AddMonths(12);
@@ -113,10 +113,10 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,FilmeFK,UtilizadorFK,AuxPreco,Preco,DataInicio,DataFim")] Aluga aluga)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,FilmeFK,UtilizadorFK,Preco,DataInicio,DataFim")] Aluga aluga)
         {
             // transfere o valor do AuxPreco para Preco
-            aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
+            //aluga.Preco = Convert.ToDecimal(aluga.AuxPreco.Replace('.', ','));
 
             if (id != aluga.Id)
             {
