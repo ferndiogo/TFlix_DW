@@ -8,7 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Controllers\API\SubscricoesAPIController.cs" />
+    <Compile Remove="Controllers\API\UtilizadoresAPINomesController.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Remove="wwwroot\favicon.png" />
+    <Content Remove="wwwroot\Fotos\Filmes\undefined_09d2a86b-5098-4c6b-8531-142fe3a61261.png" />
+    <Content Remove="wwwroot\Fotos\Filmes\undefined_e8b08bd1-67e8-43b8-865f-8808301875b4.png" />
     <Content Remove="wwwroot\Fotos\Series\dfgdf_0355e0b1-4b54-440b-b080-6273b445a3cf.jpeg" />
     <Content Remove="wwwroot\Fotos\Series\dfgdf_4033e747-3e3b-4a57-a662-fe05ab74bc89.jpeg" />
     <Content Remove="wwwroot\Fotos\Series\dfgdf_9de27b93-c293-40ea-a72d-bb8519617f11.jpeg" />
@@ -19,15 +26,17 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.0.0" />
+    <PackageReference Include="Azure.Identity" Version="1.4.0" />
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="6.0.4" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="6.0.6" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="6.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.6" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.6">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.7" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.6" />
+    <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.7" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.0" />
   </ItemGroup>
 

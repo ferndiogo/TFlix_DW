@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using TFlix.Data;
 using TFlix.Models;
@@ -7,26 +12,26 @@ namespace TFlix.Controllers.API
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class FilmesAPIController : ControllerBase
+    public class SeriesAPIController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public FilmesAPIController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
+        public SeriesAPIController(ApplicationDbContext context, IWebHostEnvironment webHostEnvironment)
         {
             _context = context;
 
             _webHostEnvironment = webHostEnvironment;
         }
 
-        // GET: api/FilmesAPI
+        // GET: api/SeriesAPI
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Filme>>> GetFilmes()
+        public async Task<ActionResult<IEnumerable<Serie>>> GetSeries()
         {
-            return await _context.Filmes
+            return await _context.Series
                               .OrderByDescending(a => a.Id)
-                              .Select(a => new Filme
+                              .Select(a => new Serie
                               {
                                   Id = a.Id,
                                   Titulo = a.Titulo,
@@ -36,49 +41,54 @@ namespace TFlix.Controllers.API
                                   Classificacao = a.Classificacao,
                                   Elenco = a.Elenco,
                                   Genero = a.Genero,
+                                  Temporada = a.Temporada,
+                                  Episodio = a.Episodio,
                               })
                               .ToListAsync();
         }
 
-        // GET: api/FilmesAPI/5
+        // GET: api/SeriesAPI/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Filme>> GetFilme(int id)
+        public async Task<ActionResult<Serie>> GetSerie(int id)
         {
-            var filme = await _context.Filmes
-                                    .Select(a => new Filme
-                                    {
-                                        Id = a.Id,
-                                        Titulo = a.Titulo,
-                                        Imagem = a.Imagem,
-                                        Sinopse = a.Sinopse,
-                                        DataLancamento = a.DataLancamento,
-                                        Classificacao = a.Classificacao,
-                                        Elenco = a.Elenco,
-                                        Genero = a.Genero,
-                                    })
+            var serie = await _context.Series
+                              .OrderByDescending(a => a.Id)
+                              .Select(a => new Serie
+                              {
+                                  Id = a.Id,
+                                  Titulo = a.Titulo,
+                                  Imagem = a.Imagem,
+                                  Sinopse = a.Sinopse,
+                                  DataLancamento = a.DataLancamento,
+                                  Classificacao = a.Classificacao,
+                                  Elenco = a.Elenco,
+                                  Genero = a.Genero,
+                                  Temporada = a.Temporada,
+                                  Episodio = a.Episodio,
+                              })
                                     .Where(a => a.Id == id)
                                     .FirstOrDefaultAsync(); ;
 
-            if (filme == null)
+            if (serie == null)
             {
                 return NotFound();
             }
 
-            return filme;
+            return serie;
         }
 
-        // PUT: api/FilmesAPI/5
+        // PUT: api/SeriesAPI/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutFilme(int id, Filme filme)
+        public async Task<IActionResult> PutSerie(int id, Serie serie)
         {
-            if (id != filme.Id)
+            if (id != serie.Id)
             {
                 return BadRequest();
             }
+            serie.Imagem = "semFoto.png";
 
-            filme.Imagem = "semFoto.png";
-            _context.Entry(filme).State = EntityState.Modified;
+            _context.Entry(serie).State = EntityState.Modified;
 
             try
             {
@@ -86,7 +96,7 @@ namespace TFlix.Controllers.API
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!FilmeExists(id))
+                if (!SerieExists(id))
                 {
                     return NotFound();
                 }
@@ -96,20 +106,17 @@ namespace TFlix.Controllers.API
                 }
             }
 
-            
-
             return NoContent();
         }
 
-        // POST: api/FilmesAPI
+        // POST: api/SeriesAPI
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Filme>> PostFilme([FromForm] Filme filme,IFormFile imagem)
+        public async Task<ActionResult<Serie>> PostSerie([FromForm] Serie serie, IFormFile imagem)
         {
-
             if (imagem == null)
             {
-                filme.Imagem = "semFoto.png";
+                serie.Imagem = "semFoto.png";
             }
             else
             {
@@ -123,11 +130,11 @@ namespace TFlix.Controllers.API
                     // definir o nome da imagem
                     Guid g;
                     g = Guid.NewGuid();
-                    string imageName = filme.Titulo + "_" + g.ToString();
+                    string imageName = serie.Titulo + "_" + g.ToString();
                     string extensionOfImage = Path.GetExtension(imagem.FileName).ToLower();
                     imageName += extensionOfImage;
                     // adicionar o nome da imagem aos filmes
-                    filme.Imagem = imageName;
+                    serie.Imagem = imageName;
                 }
 
                 // guardar a imagem no disco
@@ -135,47 +142,44 @@ namespace TFlix.Controllers.API
                 {
                     // pergunta ao servidor que endereço quer usar
                     string addressToStoreFile = _webHostEnvironment.WebRootPath;
-                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Filmes");
+                    string newImageLocalization = Path.Combine(addressToStoreFile, "Fotos//Series");
                     // ver se a diretoria existe se não cria
                     if (!Directory.Exists(newImageLocalization))
                     {
                         Directory.CreateDirectory(newImageLocalization);
                     }
                     //guarda a imagem no disco
-                    newImageLocalization = Path.Combine(newImageLocalization, filme.Imagem);
+                    newImageLocalization = Path.Combine(newImageLocalization, serie.Imagem);
                     using var stream = new FileStream(newImageLocalization, FileMode.Create);
                     await imagem.CopyToAsync(stream);
                 }
             }
 
-
-
-
-            _context.Filmes.Add(filme);
+            _context.Series.Add(serie);
             await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetFilme", new { id = filme.Id }, filme);
+            return CreatedAtAction("GetSerie", new { id = serie.Id }, serie);
         }
 
-        // DELETE: api/FilmesAPI/5
+        // DELETE: api/SeriesAPI/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteFilme(int id)
+        public async Task<IActionResult> DeleteSerie(int id)
         {
-            var filme = await _context.Filmes.FindAsync(id);
-            if (filme == null)
+            var serie = await _context.Series.FindAsync(id);
+            if (serie == null)
             {
                 return NotFound();
             }
 
-            _context.Filmes.Remove(filme);
+            _context.Series.Remove(serie);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool FilmeExists(int id)
+        private bool SerieExists(int id)
         {
-            return _context.Filmes.Any(e => e.Id == id);
+            return _context.Series.Any(e => e.Id == id);
         }
     }
 }
