@@ -77,11 +77,10 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UtilizadorFK,Filmes,Series,Duracao,AuxPreco,Preco,DataInicio,DataFim")] Subscricao subscricao)
+        public async Task<IActionResult> Create([Bind("Id,UtilizadorFK,Filmes,Series,Duracao,Preco,DataInicio,DataFim")] Subscricao subscricao)
         {
-
             // transfer data from AuxPrice to Price
-            subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
+            //subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
 
             subscricao.DataInicio = DateTime.Now;
 
@@ -167,7 +166,7 @@ namespace TFlix.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UtilizadorFK,Duracao,Preco,DataInicio,DataFim,Filmes,Series,AuxPreco")] Subscricao subscricao)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UtilizadorFK,Duracao,Preco,DataInicio,DataFim,Filmes,Series")] Subscricao subscricao)
         {
             if (id != subscricao.Id)
             {
@@ -175,7 +174,7 @@ namespace TFlix.Controllers
             }
 
             // transfer data from AuxPrice to Price
-            subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
+            //subscricao.Preco = Convert.ToDecimal(subscricao.AuxPreco.Replace('.', ','));
 
             subscricao.DataInicio = DateTime.Now;
 

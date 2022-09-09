@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TFlix.Data;
 
@@ -11,13 +12,14 @@ using TFlix.Data;
 namespace TFlix.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20220718002424_API")]
+    partial class API
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.6")
+                .HasAnnotation("ProductVersion", "6.0.7")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -67,14 +69,14 @@ namespace TFlix.Migrations
                         new
                         {
                             Id = "a",
-                            ConcurrencyStamp = "07bd5631-3bb5-4cf5-8743-4256f8a36679",
+                            ConcurrencyStamp = "8a614acc-a16a-41d2-82cc-2ae508a885c6",
                             Name = "Administrador",
                             NormalizedName = "ADMINISTRADOR"
                         },
                         new
                         {
                             Id = "c",
-                            ConcurrencyStamp = "1e09f51e-b354-48b1-951b-082cd287ded8",
+                            ConcurrencyStamp = "d38840cb-0000-4f90-af22-2b3b176f8259",
                             Name = "Cliente",
                             NormalizedName = "CLIENTE"
                         });

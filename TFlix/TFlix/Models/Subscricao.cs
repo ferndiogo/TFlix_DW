@@ -34,14 +34,6 @@ namespace TFlix.Models
         public int Duracao { get; set; }
 
         /// <summary>
-        /// auxiliary attribute to help the app to collect the appointement's price
-        /// </summary>
-        [NotMapped]  // this anotation tells the EF that this attribute must not be represented on database
-        [Required(ErrorMessage = "O {0} é de preenchimento obrigatório.")]
-        [Display(Name = "Preço")]
-        public string AuxPreco { get; set; }
-
-        /// <summary>
         /// Preço da subscrição
         /// </summary>
         [Display(Name = "Preço")]
